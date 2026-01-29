@@ -32,7 +32,7 @@ async function resetAdminPassword() {
     console.log('✅ Senha do administrador resetada com sucesso!');
     console.log('Email:', updatedAdmin.email);
     console.log('Nova senha: admin123');
-    console.log('Acesse: http://localhost:3000/admin/signin');
+    console.log('Acesse: /admin/signin');
 
   } catch (error) {
     console.error('❌ Erro ao resetar senha do administrador:', error);

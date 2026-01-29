@@ -33,8 +33,8 @@ export function getBaseUrl() {
   // Prioridade 4: Produção genérica
   if (process.env.NODE_ENV === 'production') return 'https://nineco.com.br'
   
-  // Fallback: desenvolvimento
-  return 'http://localhost:3000'
+  // Fallback: desenvolvimento (apenas em ambiente local)
+  return typeof window !== 'undefined' ? window.location.origin : ''
 }
 
 // Função para verificar se estamos em produção

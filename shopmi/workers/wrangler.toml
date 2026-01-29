@@ -10,14 +10,14 @@ workers_dev = true
 node_compat = false
 
 # Account ID (obtenha em: dash.cloudflare.com -> Workers -> Overview)
-account_id = "ad41f4e2927a6daf25f7c7d6891e31bd"
+# account_id = "YOUR_ACCOUNT_ID_HERE"
 
 # ============================================
 # Environment Variables (não sensíveis)
 # ============================================
 [vars]
-ORIGIN_URL = "http://localhost:3000"  # URL do Next.js local para desenvolvimento
-SHOPIFY_DOMAIN = "uxh1te-1d.myshopify.com"
+ORIGIN_URL = "https://your-site.com"  # URL do Next.js
+SHOPIFY_DOMAIN = "your-store.myshopify.com"
 ENVIRONMENT = "development"
 
 # ============================================
@@ -29,18 +29,18 @@ binding = "AI"
 # ============================================
 # KV Namespace for Cache
 # ============================================
-[[kv_namespaces]]
-binding = "CACHE"
-id = "8a5f3c63dde44a65b3ef3c5eba6e7fa7"
-preview_id = "3e941d6b109445a3a81af6fecaa4fde8"
+# [[kv_namespaces]]
+# binding = "CACHE"
+# id = "YOUR_KV_ID"
+# preview_id = "YOUR_PREVIEW_KV_ID"
 
 # ============================================
 # D1 Database for Analytics
 # ============================================
-[[d1_databases]]
-binding = "DB"
-database_name = "shopmi-analytics"
-database_id = "e5c15be8-bfa9-427d-ab81-c2f4c7c47212"
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "shopmi-analytics"
+# database_id = "YOUR_D1_DATABASE_ID"
 
 # ============================================
 # R2 Bucket for Image Cache (Opcional)
@@ -61,38 +61,38 @@ enabled = true
 # ============================================
 [env.development]
 name = "shopmi-edge-dev"
-vars = { ORIGIN_URL = "http://localhost:3000", SHOPIFY_DOMAIN = "uxh1te-1d.myshopify.com", ENVIRONMENT = "development" }
+vars = { ORIGIN_URL = "https://your-site.com", SHOPIFY_DOMAIN = "your-store.myshopify.com", ENVIRONMENT = "development" }
 
 # Herdar bindings do top level
 [env.development.ai]
 binding = "AI"
 
-[[env.development.kv_namespaces]]
-binding = "CACHE"
-id = "8a5f3c63dde44a65b3ef3c5eba6e7fa7"
-preview_id = "3e941d6b109445a3a81af6fecaa4fde8"
+# [[env.development.kv_namespaces]]
+# binding = "CACHE"
+# id = "YOUR_KV_ID"
+# preview_id = "YOUR_PREVIEW_KV_ID"
 
-[[env.development.d1_databases]]
-binding = "DB"
-database_name = "shopmi-analytics"
-database_id = "e5c15be8-bfa9-427d-ab81-c2f4c7c47212"
+# [[env.development.d1_databases]]
+# binding = "DB"
+# database_name = "shopmi-analytics"
+# database_id = "YOUR_D1_DATABASE_ID"
 
 # ============================================
 # Staging Environment
 # ============================================
 [env.staging]
 name = "shopmi-edge-staging"
-vars = { ORIGIN_URL = "https://mibrasil.com", ENVIRONMENT = "staging" }
+vars = { ORIGIN_URL = "https://your-site.com", ENVIRONMENT = "staging" }
 
 # Route para staging (configurar após ter domínio)
-# route = { pattern = "staging.suaoja.com/*", zone_name = "suaoja.com" }
+# route = { pattern = "staging.your-site.com/*", zone_name = "your-site.com" }
 
 # ============================================
 # Production Environment
 # ============================================
 [env.production]
 name = "shopmi-edge-production"
-vars = { ORIGIN_URL = "https://mibrasil.com", ENVIRONMENT = "production" }
+vars = { ORIGIN_URL = "https://your-site.com", ENVIRONMENT = "production" }
 
 # Route para production (configurar após ter domínio)
 # route = { pattern = "suaoja.com/*", zone_name = "suaoja.com" }

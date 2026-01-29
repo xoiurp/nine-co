@@ -32,7 +32,7 @@ async function createAdmin() {
     console.log('✅ Usuário administrador criado com sucesso!');
     console.log('Email:', admin.email);
     console.log('Senha: admin123');
-    console.log('Acesse: http://localhost:3000/admin/signin');
+    console.log('Acesse: /admin/signin');
 
   } catch (error) {
     console.error('❌ Erro ao criar administrador:', error);

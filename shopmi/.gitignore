@@ -54,4 +54,14 @@ prisma/dev.db
 
 .history/
 temp-repo/
-. n e t l i f y /
+.netlify/
+
+# Documentation with sensitive examples (setup guides)
+AUTH_SETUP.md
+SECURITY_AUDIT_REPORT.md
+YAMPI_TEST_DOMAINS.md
+YAMPI_DOMAIN_TEST.md
+YAMPI_CHECKOUT_SETUP.md
+SHOPIFY_WEBHOOKS_SETUP.md
+SHOPIFY_FLOW_SETUP.md
+workers/SETUP_GUIDE.md
