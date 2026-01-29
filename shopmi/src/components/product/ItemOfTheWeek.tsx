@@ -55,8 +55,8 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
   };
 
   return (
-    <section className="w-full py-12 sm:py-16 bg-[#f5f5f5]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-[#f5f5f5]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Header */}
         <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-8 sm:mb-12">
           Item of the <span className="italic">week</span>
@@ -64,9 +64,9 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left - Image Gallery */}
-          <div className="relative">
-            {/* Main Image */}
-            <div className="relative aspect-square bg-white overflow-hidden">
+          <div>
+            {/* Main Image Container */}
+            <div className="relative aspect-square bg-white">
               {currentImage ? (
                 <Image
                   src={currentImage.transformedSrc || currentImage.originalSrc || ""}
@@ -89,8 +89,9 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-900/80 hover:bg-gray-900 flex items-center justify-center transition-colors text-white"
                     aria-label="Previous image"
+                    type="button"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
@@ -98,8 +99,9 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-sm transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-900/80 hover:bg-gray-900 flex items-center justify-center transition-colors text-white"
                     aria-label="Next image"
+                    type="button"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
@@ -109,7 +111,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
               )}
 
               {/* Image Counter */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
                 <span className="text-xs text-gray-500">
                   {String(currentImageIndex + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
                 </span>
@@ -146,7 +148,10 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                 <span className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-600">
                   Size {selectedSize}
                 </span>
-                <button className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 hover:text-gray-600 underline">
+                <button 
+                  type="button"
+                  className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 hover:text-gray-600 underline"
+                >
                   Size Guide
                 </button>
               </div>
@@ -155,6 +160,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
+                    type="button"
                     className={`w-10 h-10 text-xs font-medium border transition-colors ${
                       selectedSize === size
                         ? "border-gray-900 text-gray-900"
@@ -177,29 +183,27 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color.name)}
-                    className={`w-6 h-6 rounded-full border-2 transition-all ${
+                    type="button"
+                    className={`relative w-6 h-6 border-2 transition-transform ${
                       selectedColor === color.name
                         ? "border-gray-900 scale-110"
-                        : "border-transparent hover:scale-105"
+                        : "border-gray-300 hover:scale-105"
                     }`}
                     style={{ backgroundColor: color.value }}
                     aria-label={color.name}
-                  >
-                    {color.name === "White" && (
-                      <span className="absolute inset-0 rounded-full border border-gray-200" />
-                    )}
-                  </button>
+                  />
                 ))}
               </div>
             </div>
 
             {/* Quantity and Actions */}
-            <div className="space-y-3 mt-auto">
+            <div className="mt-auto">
               {/* Quantity Selector */}
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex items-center border border-gray-300">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    type="button"
                     className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
                   >
                     −
@@ -209,6 +213,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
+                    type="button"
                     className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
                   >
                     +
@@ -219,20 +224,24 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
               {/* Add to Cart */}
               <button
                 onClick={handleAddToCart}
+                type="button"
                 className="w-full py-4 bg-black text-white text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-gray-800 transition-colors"
               >
                 Add to Cart
               </button>
 
               {/* Buy It Now */}
-              <button className="w-full py-4 border border-gray-900 text-gray-900 text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-gray-900 hover:text-white transition-colors">
+              <button 
+                type="button"
+                className="w-full py-4 border border-gray-900 text-gray-900 text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-gray-900 hover:text-white transition-colors mt-3"
+              >
                 Buy It Now
               </button>
 
               {/* View Product */}
               <Link
                 href={`/product/${product.handle}`}
-                className="block text-center text-[10px] sm:text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-gray-900 underline transition-colors py-2"
+                className="block text-center text-[10px] sm:text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-gray-900 underline transition-colors py-4"
               >
                 View Product
               </Link>
@@ -240,7 +249,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

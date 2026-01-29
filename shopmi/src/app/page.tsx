@@ -52,10 +52,16 @@ export default function Home() {
       {/* What's New - Product Grid with Tabs */}
       <WhatsNewGrid collections={collections} />
 
+      {/* 
+      TESTE: Comente os componentes abaixo um por um para identificar qual está causando o círculo branco.
+      Para comentar, adicione o símbolo de comentário antes e depois do componente, assim:
+      {/* <VideoBanner /> *\/}
+      */}
+
       {/* Video Banner with Countdown */}
       <VideoBanner />
 
-      {/* Item of the Week */}
+      
       <ItemOfTheWeek product={products[0] || null} />
 
       {/* Testimonials */}

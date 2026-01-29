@@ -237,16 +237,38 @@ nav *,
   box-shadow: none !important;
 }
 
-/* Hide NavigationMenuIndicator */
+/* COMPLETE REMOVAL: Hide ALL NavigationMenu artifacts */
 .NavigationMenuIndicator,
 [role="navigation"] [data-orientation="horizontal"],
 .NavigationMenuPrimitiveIndicator,
-[data-radix-navigation-menu-indicator] {
+[data-radix-navigation-menu-indicator],
+[data-radix-navigation-menu-viewport],
+[data-radix-navigation-menu-viewport][data-state="closed"],
+[data-radix-navigation-menu-viewport][data-state="open"] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
   height: 0 !important;
   width: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  overflow: hidden !important;
+}
+
+/* Remove any Radix UI viewport containers */
+[data-radix-navigation-menu-viewport]::before,
+[data-radix-navigation-menu-viewport]::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Hide any circular or oval shapes that might appear */
+[class*="rounded"],
+[class*="circle"],
+svg[class*="rounded"],
+div[class*="rounded-full"] {
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
 }
 
 /* Remove any before/after that might create circles */
