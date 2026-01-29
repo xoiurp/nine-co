@@ -1,0 +1,914 @@
+"            "status": "ACTIVE",
+            "totalInventory": 80,
+            "options": [
+                {
+                    "id": "gid://shopify/ProductOption/11550965661925",
+                    "name": "Cor",
+                    "values": [
+                        "Preto",
+                        "Rosa",
+                        "Branco"
+                    ],
+    {
+            "id": "gid://shopify/Product/9145366446309",
+            "title": "POCO Pods",
+            "handle": "poco-pods",
+            "productType": "Acessório",
+            "vendor": "Xiaomi",
+            "tags": [
+                "Poco"
+            ],
+            "status": "ACTIVE",
+            "totalInventory": 0,
+            "options": [
+                {
+                    "id": "gid://shopify/ProductOption/11552875872485",
+                    "name": "Cor",
+                    "values": [
+                        "Preto"
+                    ],
+                    "__typename": "ProductOption"
+                }
+            ],
+            "images": [
+                {
+                    "id": "gid://shopify/ProductImage/45086545903845",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_Pods_2.webp?v=1746978118",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45086545838309",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_Pods.webp?v=1746978118",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45086545871077",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/poco-pods1.webp?v=1746978118",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45086554685669",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_Pods.5.jpg?v=1746978204",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45086546002149",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/poco-pods.3.jpg?v=1746978204",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                }
+            ],
+            "variants": [
+                {
+                    "id": "gid://shopify/ProductVariant/46752099500261",
+                    "title": "Preto",
+                    "sku": "poco-pods-1",
+                    "price": "199.00",
+                    "compareAtPrice": null,
+                    "inventoryQuantity": 10,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45086545838309",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_Pods.webp?v=1746978118",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Preto",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30127908880613",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36855779164389\",\"gid://shopify/MediaImage/36855779131621\",\"gid://shopify/MediaImage/36855779197157\",\"gid://shopify/MediaImage/36855785259237\",\"gid://shopify/MediaImage/36855779557605\",\"gid://shopify/MediaImage/36855779524837\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30127908913381",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#050505",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                }
+            ],
+            "metafields": [
+                {
+                    "id": "gid://shopify/Metafield/29872522166501",
+                    "namespace": "specs",
+                    "key": "processador",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522199269",
+                    "namespace": "specs",
+                    "key": "tela",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522232037",
+                    "namespace": "specs",
+                    "key": "camera",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522264805",
+                    "namespace": "specs",
+                    "key": "memoria",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522297573",
+                    "namespace": "specs",
+                    "key": "rede_bandas",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522330341",
+                    "namespace": "specs",
+                    "key": "conectividade",
+                    "value": "Informação não disponível",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522363109",
+                    "namespace": "specs",
+                    "key": "sistema_operacional",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522395877",
+                    "namespace": "specs",
+                    "key": "sensores",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522428645",
+                    "namespace": "specs",
+                    "key": "bateria",
+                    "value": "Informação não disponível",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522461413",
+                    "namespace": "specs",
+                    "key": "audio_video",
+                    "value": "Não aplicável",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522494181",
+                    "namespace": "specs",
+                    "key": "dimensoes",
+                    "value": "Informação não disponível",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522526949",
+                    "namespace": "specs",
+                    "key": "conteudo_embalagem",
+                    "value": "Produto, manual",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/29872522559717",
+                    "namespace": "specs",
+                    "key": "garantia",
+                    "value": "3 MESES",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072185192677",
+                    "namespace": "custom",
+                    "key": "ruido",
+                    "value": "Não",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072185225445",
+                    "namespace": "custom",
+                    "key": "sem_fio",
+                    "value": "Sim",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072200495333",
+                    "namespace": "custom",
+                    "key": "potencia_bateria",
+                    "value": "Estojo de Carregamento",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072200528101",
+                    "namespace": "custom",
+                    "key": "carregamento_bateria",
+                    "value": "Com fio",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072200560869",
+                    "namespace": "custom",
+                    "key": "resistente_agua",
+                    "value": "Não",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30072200593637",
+                    "namespace": "custom",
+                    "key": "microfone",
+                    "value": "Sim",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30127902982373",
+                    "namespace": "shopify",
+                    "key": "color-pattern",
+                    "value": "[\"gid://shopify/Metaobject/101059952869\"]",
+                    "type": "list.metaobject_reference",
+                    "__typename": "Metafield"
+                }
+            ],
+            "__typename": "Product"
+        },                    "__typename": "ProductOption"
+                }
+            ],
+            "images": [
+                {
+                    "id": "gid://shopify/ProductImage/45102133313765",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/0.xiaomi.amazfit.bip.5.blanco_23c0af3c-ac05-430b-9250-291d1e13d384.jpg?v=1747102329",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45102036877541",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/3.xiaomi.amazfit.bip.5.collection.jpg?v=1747102329",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45102035468517",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/xiaomi.amazfit.bip.5.preto.jpg?v=1747102329",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45102038253797",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/2.xiaomi.amazfit.bip.5.branco.jpg?v=1747102329",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45102035402981",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/xiaomi.amazfit.bip.5.rosa.jpg?v=1747102329",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                }
+            ],
+            "variants": [
+                {
+                    "id": "gid://shopify/ProductVariant/46746949091557",
+                    "title": "Preto",
+                    "sku": "amazfit-bip-5Preto",
+                    "price": "549.00",
+                    "compareAtPrice": "632.00",
+                    "inventoryQuantity": 40,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45102035468517",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/xiaomi.amazfit.bip.5.preto.jpg?v=1747102329",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Preto",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30152244527333",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36867991306469\",\"gid://shopify/MediaImage/36868009885925\",\"gid://shopify/MediaImage/36868009787621\",\"gid://shopify/MediaImage/36868009820389\",\"gid://shopify/MediaImage/36868009918693\",\"gid://shopify/MediaImage/36868009853157\",\"gid://shopify/MediaImage/36868009754853\",\"gid://shopify/MediaImage/36868010016997\",\"gid://shopify/MediaImage/36868009722085\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30152244560101",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#1e1e1e",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                },
+                {
+                    "id": "gid://shopify/ProductVariant/46756531306725",
+                    "title": "Rosa",
+                    "sku": "amazfit-bip-5Rosa",
+                    "price": "549.00",
+                    "compareAtPrice": "632.00",
+                    "inventoryQuantity": 40,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45102035402981",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/xiaomi.amazfit.bip.5.rosa.jpg?v=1747102329",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Rosa",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30152298889445",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36867991437541\",\"gid://shopify/MediaImage/36868040884453\",\"gid://shopify/MediaImage/36868041015525\",\"gid://shopify/MediaImage/36868040917221\",\"gid://shopify/MediaImage/36868040786149\",\"gid://shopify/MediaImage/36868040851685\",\"gid://shopify/MediaImage/36868040818917\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30152298922213",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#fed2cc",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                },
+                {
+                    "id": "gid://shopify/ProductVariant/46756531339493",
+                    "title": "Branco",
+                    "sku": "amazfit-bip-5Branco",
+                    "price": "549.00",
+                    "compareAtPrice": "632.00",
+                    "inventoryQuantity": 0,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45102133313765",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/0.xiaomi.amazfit.bip.5.blanco_23c0af3c-ac05-430b-9250-291d1e13d384.jpg?v=1747102329",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Branco",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30152312815845",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36868061200613\",\"gid://shopify/MediaImage/36868061167845\",\"gid://shopify/MediaImage/36868061233381\",\"gid://shopify/MediaImage/36868061036773\",\"gid://shopify/MediaImage/36868061069541\",\"gid://shopify/MediaImage/36868061135077\",\"gid://shopify/MediaImage/36868065788133\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30152312848613",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#ffffff",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                }
+            ],
+            "metafields": [
+                {
+                    "id": "gid://shopify/Metafield/30205265445093",
+                    "namespace": "custom",
+                    "key": "descri_curta",
+                    "value": "Smartwatch com tela ultragrande de 1,91\", bateria de até 10 dias",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265477861",
+                    "namespace": "shopify--discovery--product_recommendation",
+                    "key": "related_products",
+                    "value": "[\"gid://shopify/Product/9154510356709\",\"gid://shopify/Product/9145366872293\",\"gid://shopify/Product/9145366970597\",\"gid://shopify/Product/9145366937829\",\"gid://shopify/Product/9149289529573\"]",
+                    "type": "list.product_reference",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265510629",
+                    "namespace": "shopify--discovery--product_recommendation",
+                    "key": "complementary_products",
+                    "value": "[\"gid://shopify/Product/9145367134437\",\"gid://shopify/Product/9145367101669\",\"gid://shopify/Product/9145367036133\"]",
+                    "type": "list.product_reference",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265543397",
+                    "namespace": "custom",
+                    "key": "sw_others_embalagem",
+                    "value": "Smartwatch Amazfit Bip 5\n\nPulseira de silicone\n\nCabo de carregamento magnético\n\nManual do usuário",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265576165",
+                    "namespace": "custom",
+                    "key": "sw_others_bateria",
+                    "value": "Capacidade: 300 mAh\n\nAutonomia: até 10 dias de uso típico, até 5 dias de uso intenso, até 26 dias em modo de economia de bateria\n\nTempo de recarga: cerca de 2 horas",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265608933",
+                    "namespace": "custom",
+                    "key": "sw_others_app",
+                    "value": "Sistema operacional Zepp OS 2.0\n\nCompatível com Android 7.0+ e iOS 12.0+\n\nGerenciado pelo aplicativo Zepp App",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265641701",
+                    "namespace": "custom",
+                    "key": "sw_others_diferenciais",
+                    "value": "Tela grande de 1,91\"\n\nAlexa integrada\n\nReconhecimento inteligente de 7 atividades\n\nMais de 70 watchfaces personalizáveis\n\nCorpo leve (26g) e pulseira confortável\n\nCompatibilidade com apps fitness como Strava, Komoot, adidas Running",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265674469",
+                    "namespace": "custom",
+                    "key": "sw_others_saude",
+                    "value": "Monitoramento contínuo de frequência cardíaca\n\nMedição de oxigênio no sangue (SpO2)\n\nMonitoramento de estresse\n\nMonitoramento avançado do sono (incluindo estágios e cochilos)\n\nAcompanhamento do ciclo menstrual",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265707237",
+                    "namespace": "custom",
+                    "key": "sw_others_sports",
+                    "value": "124 modos esportivos\n\n7 modos com reconhecimento automático",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265740005",
+                    "namespace": "custom",
+                    "key": "sw_others_musica",
+                    "value": "Não realiza reprodução direta de música (armazenamento ou streaming local)",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265772773",
+                    "namespace": "custom",
+                    "key": "sw_others_camera",
+                    "value": "Não possui câmera integrada",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265805541",
+                    "namespace": "custom",
+                    "key": "sw_others_chamada",
+                    "value": "Suporta chamadas Bluetooth, com microfone e alto-falante integrados para atender e realizar ligações quando conectado ao smartphone",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265838309",
+                    "namespace": "custom",
+                    "key": "sw_others_sensores",
+                    "value": "BioTracker PPG biométrico (frequência cardíaca e SpO2)\n\nAcelerômetro de 3 eixos",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265871077",
+                    "namespace": "custom",
+                    "key": "sw_others_memoria_local",
+                    "value": "Não possui armazenamento interno dedicado para músicas ou arquivos",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265903845",
+                    "namespace": "custom",
+                    "key": "sw_others_watter",
+                    "value": "Certificação IP68 (resistente à água e poeira; adequado para uso em ambientes úmidos, mas não indicado para natação prolongada)",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265936613",
+                    "namespace": "custom",
+                    "key": "sw_others_pulseira",
+                    "value": "Silicone confortável, hipoalergênico\n\nLargura: 22 mm\n\nSistema de encaixe por pino, facilmente substituível",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205265969381",
+                    "namespace": "custom",
+                    "key": "sw_conectividade_wifi",
+                    "value": "Não possui conectividade Wi-Fi; conexão é feita via Bluetooth com o smartphone",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205266002149",
+                    "namespace": "custom",
+                    "key": "sw_conectividade_gps",
+                    "value": "GPS integrado, com suporte a quatro sistemas de posicionamento por satélite para rastreamento preciso de atividades físicas",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205266034917",
+                    "namespace": "custom",
+                    "key": "sw_conectividade_bluetooth",
+                    "value": "Bluetooth 5.2, permitindo emparelhamento com smartphones, chamadas e uso de assistente de voz",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30205266067685",
+                    "namespace": "custom",
+                    "key": "sw_recursos_tela",
+                    "value": "Touchscreen\n\nExibição de notificações, clima, controle de música do smartphone, personalização de mostradores, cronômetro, entre outros",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                }
+            ],
+            "__typename": "Product"
+        },
+ {
+            "id": "gid://shopify/Product/9153707114725",
+            "title": "Poco X6 Pro 5G 512GB 12GB",
+            "handle": "poco-x6-pro-5g-12gb-512",
+            "productType": "Smartphones",
+            "vendor": "Xiaomi",
+            "tags": [
+                "Poco"
+            ],
+            "status": "ACTIVE",
+            "totalInventory": 100,
+            "options": [
+                {
+                    "id": "gid://shopify/ProductOption/11550051205349",
+                    "name": "Cor",
+                    "values": [
+                        "Preto",
+                        "Cinza"
+                    ],
+                    "__typename": "ProductOption"
+                },
+                {
+                    "id": "gid://shopify/ProductOption/11550051238117",
+                    "name": "Memória RAM",
+                    "values": [
+                        "12 GB"
+                    ],
+                    "__typename": "ProductOption"
+                },
+                {
+                    "id": "gid://shopify/ProductOption/11550051270885",
+                    "name": "Memória Interna",
+                    "values": [
+                        "512 GB"
+                    ],
+                    "__typename": "ProductOption"
+                }
+            ],
+            "images": [
+                {
+                    "id": "gid://shopify/ProductImage/45069404766437",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_X6_Pro_5G_preto.jpg?v=1746834190",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45069404831973",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_X6_Pro_5G_cinza.jpg?v=1746834190",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45069404733669",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/4.Poco_X6_Pro_5G_preto.jpg?v=1746834190",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45069404799205",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/3.Poco_X6_Pro_5G_cinza.jpg?v=1746834190",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                },
+                {
+                    "id": "gid://shopify/ProductImage/45069404864741",
+                    "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/3.Poco_X6_Pro_5G_preto.jpg?v=1746834182",
+                    "altText": "",
+                    "width": 1000,
+                    "height": 1000,
+                    "__typename": "Image"
+                }
+            ],
+            "variants": [
+                {
+                    "id": "gid://shopify/ProductVariant/46743968874725",
+                    "title": "Preto / 12 GB / 512 GB",
+                    "sku": "poco-x6-pro-5g-12gb-512Preto",
+                    "price": "2407.00",
+                    "compareAtPrice": "2769.00",
+                    "inventoryQuantity": 50,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45069404766437",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_X6_Pro_5G_preto.jpg?v=1746834190",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Preto",
+                            "__typename": "SelectedOption"
+                        },
+                        {
+                            "name": "Memória RAM",
+                            "value": "12 GB",
+                            "__typename": "SelectedOption"
+                        },
+                        {
+                            "name": "Memória Interna",
+                            "value": "512 GB",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30110236868837",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36842416734437\",\"gid://shopify/MediaImage/36842417619173\",\"gid://shopify/MediaImage/36842416668901\",\"gid://shopify/MediaImage/36842417586405\",\"gid://shopify/MediaImage/36842421256421\",\"gid://shopify/MediaImage/36842417651941\",\"gid://shopify/MediaImage/36842416701669\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30110236901605",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#030303",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                },
+                {
+                    "id": "gid://shopify/ProductVariant/46743968907493",
+                    "title": "Cinza / 12 GB / 512 GB",
+                    "sku": "poco-x6-pro-5g-12gb-512Cinza",
+                    "price": "2407.00",
+                    "compareAtPrice": "2769.00",
+                    "inventoryQuantity": 50,
+                    "availableForSale": true,
+                    "barcode": "",
+                    "image": {
+                        "id": "gid://shopify/ProductImage/45069404831973",
+                        "src": "https://cdn.shopify.com/s/files/1/0742/3960/7013/files/Poco_X6_Pro_5G_cinza.jpg?v=1746834190",
+                        "__typename": "Image"
+                    },
+                    "selectedOptions": [
+                        {
+                            "name": "Cor",
+                            "value": "Cinza",
+                            "__typename": "SelectedOption"
+                        },
+                        {
+                            "name": "Memória RAM",
+                            "value": "12 GB",
+                            "__typename": "SelectedOption"
+                        },
+                        {
+                            "name": "Memória Interna",
+                            "value": "512 GB",
+                            "__typename": "SelectedOption"
+                        }
+                    ],
+                    "metafields": [
+                        {
+                            "id": "gid://shopify/Metafield/30110243455205",
+                            "namespace": "custom",
+                            "key": "mediavariant",
+                            "value": "[\"gid://shopify/MediaImage/36842416767205\",\"gid://shopify/MediaImage/36842435543269\",\"gid://shopify/MediaImage/36842417651941\",\"gid://shopify/MediaImage/36842416636133\"]",
+                            "type": "list.file_reference",
+                            "__typename": "Metafield"
+                        },
+                        {
+                            "id": "gid://shopify/Metafield/30110243487973",
+                            "namespace": "custom",
+                            "key": "cor",
+                            "value": "#a4a1a1",
+                            "type": "color",
+                            "__typename": "Metafield"
+                        }
+                    ],
+                    "__typename": "ProductVariant"
+                }
+            ],
+            "metafields": [
+                {
+                    "id": "gid://shopify/Metafield/30093746503909",
+                    "namespace": "custom",
+                    "key": "audio_video",
+                    "value": "Alto-falantes estéreo; Dolby Atmos; saída 3,5 mm",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746536677",
+                    "namespace": "custom",
+                    "key": "bateria",
+                    "value": "Li-Po 5000 mAh, carregamento Turbo 67 W",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746569445",
+                    "namespace": "custom",
+                    "key": "camera",
+                    "value": "Tripla: 67 MP (principal, OIS) + 8 MP (ultrawide) + 2 MP (macro); Frontal 16 MP",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746602213",
+                    "namespace": "custom",
+                    "key": "conectividade",
+                    "value": "Wi-Fi 6; Bluetooth 5.3; NFC; IR; GPS/GLONASS/Galileo/BDS; USB-C",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746634981",
+                    "namespace": "custom",
+                    "key": "conteudo_embalagem",
+                    "value": "Smartphone, Carregador 67 W, Cabo USB-C, Capa, Ferramenta SIM, Manual",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746667749",
+                    "namespace": "custom",
+                    "key": "dimensoes",
+                    "value": "160,5 × 74,3 × 8,3 mm; 188 g",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746700517",
+                    "namespace": "custom",
+                    "key": "garantia",
+                    "value": "12 meses",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746733285",
+                    "namespace": "custom",
+                    "key": "memoria",
+                    "value": "12 GB RAM + 512 GB (UFS 3.1) – sem microSD",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746766053",
+                    "namespace": "custom",
+                    "key": "processador",
+                    "value": "MediaTek Dimensity 8300-Ultra (5 nm, octa-core até 3.0 GHz)",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746798821",
+                    "namespace": "custom",
+                    "key": "rede_bandas",
+                    "value": "5G SA/NSA; 4G LTE global; Dual SIM",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746831589",
+                    "namespace": "custom",
+                    "key": "sensores",
+                    "value": "Leitor de digitais lateral; Acelerômetro; Giroscópio; Proximidade; Bússola",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746864357",
+                    "namespace": "custom",
+                    "key": "sistema_operacional",
+                    "value": "MIUI 14 (Android 13)",
+                    "type": "multi_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30093746897125",
+                    "namespace": "custom",
+                    "key": "tela",
+                    "value": "AMOLED 6,67\" 1.5K (2400×1080?), 120 Hz, LTPS, brilho ~1000 nits",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                },
+                {
+                    "id": "gid://shopify/Metafield/30231451468005",
+                    "namespace": "custom",
+                    "key": "descri_curta",
+                    "value": "Smartphone com Dimensity 8400-Ultra, tela AMOLED 1.5K de 120Hz e bateria de 6000mAh.",
+                    "type": "single_line_text_field",
+                    "__typename": "Metafield"
+                }
+            ],
+            "__typename": "Product"
+        }"
