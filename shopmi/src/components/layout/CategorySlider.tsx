@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -25,12 +25,12 @@ interface Props {
 const CategorySlider = ({ categories }: Props) => {
   return (
     <section className="category-slider py-6 sm:py-8 md:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Título responsivo */}
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 md:mb-8 text-center">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Título */}
+        <h2 className="text-lg sm:text-xl md:text-2xl font-light uppercase tracking-wide mb-4 sm:mb-6 md:mb-8 text-center text-[#1a1a1a]">
           Descubra os melhores produtos selecionados
         </h2>
-        
+
         <div className="relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
@@ -72,13 +72,12 @@ const CategorySlider = ({ categories }: Props) => {
           >
             {categories.map((category) => (
               <SwiperSlide key={category.id} className="!h-auto">
-                <Link 
-                  href={`/shop/${category.handle}`} 
+                <Link
+                  href={`/shop/${category.handle}`}
                   className="block group"
                 >
-                  {/* Container responsivo com aspect-ratio */}
                   <div className="relative w-full">
-                    <div className="rounded-lg overflow-hidden relative aspect-[3/4] sm:aspect-[3/4]">
+                    <div className="overflow-hidden relative aspect-[3/4] sm:aspect-[3/4]">
                       {category.image && category.image.transformedSrc ? (
                         <Image
                           src={category.image.transformedSrc}
@@ -88,10 +87,10 @@ const CategorySlider = ({ categories }: Props) => {
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                        <div className="w-full h-full bg-[#f5f5f5] flex items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400"
+                            className="h-12 w-12 sm:h-16 sm:w-16 text-[#e0e0e0]"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -105,15 +104,15 @@ const CategorySlider = ({ categories }: Props) => {
                           </svg>
                         </div>
                       )}
-                      
-                      {/* Overlay gradient para melhor legibilidade */}
+
+                      {/* Overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>
-                    
-                    {/* Botão de categoria - Touch target adequado */}
+
+                    {/* Category button */}
                     <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-[280px]">
-                      <div className="min-h-[44px] flex items-center justify-center border border-white hover:border-transparent bg-black/30 backdrop-blur-sm px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-center transition-all duration-300 hover:bg-[#AE6FFB] group-hover:bg-[#AE6FFB]">
-                        <h3 className="text-white text-sm sm:text-base md:text-lg font-bold uppercase truncate">
+                      <div className="min-h-[44px] flex items-center justify-center border border-white/60 bg-black/30 backdrop-blur-sm px-3 sm:px-4 py-2.5 sm:py-3 text-center transition-all duration-300 hover:bg-[#1a1a1a] group-hover:bg-[#1a1a1a]">
+                        <h3 className="text-white text-sm sm:text-base md:text-lg font-medium uppercase tracking-wide truncate">
                           {category.title}
                         </h3>
                       </div>
@@ -123,18 +122,18 @@ const CategorySlider = ({ categories }: Props) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          
-          {/* Botões de navegação - Touch targets 44px */}
-          <button 
-            className="swiper-button-prev-custom absolute left-0 sm:left-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-[#AE6FFB] text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-[#e55a00] transition-colors active:scale-95"
+
+          {/* Navigation buttons */}
+          <button
+            className="swiper-button-prev-custom absolute left-0 sm:left-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] bg-[#1a1a1a] text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-black transition-colors active:scale-95"
             aria-label="Anterior"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
           </button>
-          <button 
-            className="swiper-button-next-custom absolute right-0 sm:right-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] rounded-full bg-[#AE6FFB] text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-[#e55a00] transition-colors active:scale-95"
+          <button
+            className="swiper-button-next-custom absolute right-0 sm:right-2 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 min-w-[44px] min-h-[44px] bg-[#1a1a1a] text-white flex items-center justify-center cursor-pointer shadow-lg hover:bg-black transition-colors active:scale-95"
             aria-label="Próximo"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">

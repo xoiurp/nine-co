@@ -6,20 +6,20 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <section 
+    <section
       className="relative w-full h-screen min-h-[600px] overflow-hidden"
-      style={{ 
-        outline: 'none', 
+      style={{
+        outline: 'none',
         boxShadow: 'none',
         border: 'none',
         position: 'relative'
       }}
     >
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0"
-        style={{ 
-          outline: 'none', 
+        style={{
+          outline: 'none',
           boxShadow: 'none',
           border: 'none'
         }}
@@ -34,33 +34,33 @@ const HeroSection = () => {
           unoptimized
         />
         {/* Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/10"
           style={{ pointerEvents: 'none' }}
         />
       </div>
 
       {/* Content */}
-      <div 
+      <div
         className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4"
-        style={{ 
-          outline: 'none', 
+        style={{
+          outline: 'none',
           boxShadow: 'none',
           border: 'none'
         }}
       >
         {/* Main Content - Bottom aligned */}
-        <div 
+        <div
           className="mt-auto mb-24 sm:mb-32 md:mb-40"
-          style={{ 
-            outline: 'none', 
+          style={{
+            outline: 'none',
             boxShadow: 'none',
             border: 'none'
           }}
         >
           {/* Subtitle */}
           <p className="text-[10px] sm:text-xs tracking-[0.4em] uppercase mb-4 sm:mb-6 opacity-90">
-            SS26 Statement Pieces
+            Peças exclusivas Verão 26
           </p>
 
           {/* Main Title */}
@@ -71,10 +71,10 @@ const HeroSection = () => {
           {/* CTA Button */}
           <Link
             href="/shop"
-            className="inline-block px-8 sm:px-10 py-3 sm:py-4 border border-white/80 rounded-full text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium hover:bg-white hover:text-black transition-all duration-300"
+            className="inline-block px-8 sm:px-10 py-3 sm:py-4 border border-white/80 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium hover:bg-white hover:text-black transition-all duration-300"
             style={{ outline: 'none', boxShadow: 'none' }}
           >
-            Discover More
+            Descubra mais
           </Link>
         </div>
       </div>

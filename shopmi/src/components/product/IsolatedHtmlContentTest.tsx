@@ -174,7 +174,7 @@ const IsolatedHtmlContentTest: React.FC<IsolatedHtmlContentProps> = ({
         /* Estilos para o botão Adicionar ao Carrinho específico */
         a.xm-link.split_text5451[data-id="1n64fmctaq"],
         a.xm-link[data-id="1n64fmctaq"] /* Fallback se a classe split_text mudar */ {
-          background-color: #AE6FFB !important;
+          background-color: #1a1a1a !important;
           color: #FFFFFF !important;
           padding: 10px 20px !important; /* Ajuste o padding conforme necessário */
           border-radius: 25px !important; /* Bordas suaves */

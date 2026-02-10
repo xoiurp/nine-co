@@ -12,7 +12,7 @@ const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
 const SHOPIFY_ADMIN_API_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 
 if (!SHOPIFY_ADMIN_API_TOKEN) {
-  console.warn('⚠️ SHOPIFY_ADMIN_API_TOKEN não está definido');
+  // SHOPIFY_ADMIN_API_TOKEN is not defined
 }
 
 // Criando o link HTTP para a Admin API GraphQL
@@ -106,12 +106,6 @@ export async function createShopifyCustomer(
   `;
 
   try {
-    console.log('🔄 Criando cliente na Shopify via Admin API:', {
-      email: input.email,
-      firstName: input.firstName,
-      lastName: input.lastName
-    });
-
     const response = await adminClient.mutate({
       mutation: CUSTOMER_CREATE,
       variables: {
@@ -128,7 +122,6 @@ export async function createShopifyCustomer(
     // Verificar erros da Shopify
     if (response.data?.customerCreate?.userErrors?.length > 0) {
       const errors = response.data.customerCreate.userErrors;
-      console.error('❌ Erros ao criar cliente na Shopify:', errors);
       throw new Error(`Shopify Error: ${errors[0].message}`);
     }
 
@@ -142,11 +135,6 @@ export async function createShopifyCustomer(
     // Formato: "gid://shopify/Customer/1234567890"
     const shopifyCustomerId = customer.id.split('/').pop();
 
-    console.log('✅ Cliente criado com sucesso na Shopify:', {
-      shopifyCustomerId,
-      email: customer.email
-    });
-
     return {
       shopifyCustomerId: shopifyCustomerId!,
       email: customer.email,
@@ -156,8 +144,6 @@ export async function createShopifyCustomer(
     };
 
   } catch (error) {
-    console.error('❌ Erro ao criar cliente na Shopify:', error);
-
     if (error instanceof Error) {
       throw new Error(`Falha ao criar cliente na Shopify: ${error.message}`);
     }
@@ -201,8 +187,6 @@ export async function getShopifyCustomer(
   `;
 
   try {
-    console.log('🔍 Buscando cliente na Shopify:', shopifyCustomerId);
-
     // Construir o GID completo se apenas o ID foi passado
     const gid = shopifyCustomerId.startsWith('gid://')
       ? shopifyCustomerId
@@ -216,19 +200,12 @@ export async function getShopifyCustomer(
     const customer = response.data?.customer;
 
     if (!customer) {
-      console.warn('⚠️ Cliente não encontrado na Shopify:', shopifyCustomerId);
       return null;
     }
-
-    console.log('✅ Cliente encontrado na Shopify:', {
-      id: customer.id,
-      email: customer.email
-    });
 
     return customer;
 
   } catch (error) {
-    console.error('❌ Erro ao buscar cliente na Shopify:', error);
     return null;
   }
 }
@@ -260,8 +237,6 @@ export async function updateShopifyCustomer(
   `;
 
   try {
-    console.log('🔄 Atualizando cliente na Shopify:', shopifyCustomerId);
-
     // Construir o GID completo
     const gid = shopifyCustomerId.startsWith('gid://')
       ? shopifyCustomerId
@@ -278,16 +253,12 @@ export async function updateShopifyCustomer(
     });
 
     if (response.data?.customerUpdate?.userErrors?.length > 0) {
-      const errors = response.data.customerUpdate.userErrors;
-      console.error('❌ Erros ao atualizar cliente na Shopify:', errors);
       return false;
     }
 
-    console.log('✅ Cliente atualizado com sucesso na Shopify');
     return true;
 
   } catch (error) {
-    console.error('❌ Erro ao atualizar cliente na Shopify:', error);
     return false;
   }
 }

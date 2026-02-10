@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -22,9 +22,9 @@ interface Product {
   images: {
     edges: {
       node: {
-        originalSrc?: string; // Tornar opcional
-        transformedSrc: string; // Adicionar
-        altText: string | null; // Adicionar
+        originalSrc?: string;
+        transformedSrc: string;
+        altText: string | null;
       };
     }[];
   };
@@ -50,11 +50,11 @@ const Countdown = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <span className="bg-white text-black font-bold text-xl px-4 py-2 rounded">{hours}</span>
+      <span className="bg-white text-black font-bold text-xl px-4 py-2">{hours}</span>
       <span className="text-white text-xl font-bold">:</span>
-      <span className="bg-white text-black font-bold text-xl px-4 py-2 rounded">{minutes}</span>
+      <span className="bg-white text-black font-bold text-xl px-4 py-2">{minutes}</span>
       <span className="text-white text-xl font-bold">:</span>
-      <span className="bg-white text-black font-bold text-xl px-4 py-2 rounded">{seconds}</span>
+      <span className="bg-white text-black font-bold text-xl px-4 py-2">{seconds}</span>
     </div>
   );
 };
@@ -63,9 +63,9 @@ const ExclusiveOffersSlider = ({ products }: Props) => {
   return (
     <div className="exclusive-offers-slider">
     <section className="py-12">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-black text-white rounded-lg px-6 py-4 mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 sm:mb-0">Ofertas Exclusivas</h2>
+      <div className="max-w-[1400px] mx-auto px-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-black text-white px-6 py-4 mb-8">
+          <h2 className="text-2xl md:text-3xl font-light uppercase tracking-wide mb-4 sm:mb-0">Ofertas Exclusivas</h2>
           <Countdown />
         </div>
         <Swiper
@@ -97,16 +97,16 @@ const ExclusiveOffersSlider = ({ products }: Props) => {
                 <div className="relative w-full h-48 mb-4 overflow-hidden">
                   {product.images.edges[0]?.node.transformedSrc ? (
                     <Image
-                      src={product.images.edges[0].node.transformedSrc} // Alterado
-                      alt={product.images.edges[0].node.altText || product.title} // Alterado
+                      src={product.images.edges[0].node.transformedSrc}
+                      alt={product.images.edges[0].node.altText || product.title}
                       fill={true}
                       className="object-contain hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                    <div className="w-full h-full flex items-center justify-center bg-[#f5f5f5]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-12 w-12 text-gray-400"
+                        className="h-12 w-12 text-[#e0e0e0]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -122,13 +122,13 @@ const ExclusiveOffersSlider = ({ products }: Props) => {
                   )}
                 </div>
                 <div className="text-left w-full">
-                  <h3 className="font-semibold mb-2 line-clamp-2 h-10 text-sm md:text-base">{product.title}</h3>
-                  <p className="text-[#AE6FFB] font-bold text-lg mb-4">
+                  <h3 className="font-medium text-[#1a1a1a] mb-2 line-clamp-2 h-10 text-sm uppercase tracking-wide">{product.title}</h3>
+                  <p className="text-[#1a1a1a] font-medium text-sm mb-4">
                     R$ {parseFloat(product.priceRange.minVariantPrice.amount).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                   </p>
                   <Link
                     href={`/product/${product.handle}`}
-                    className="bg-[#AE6FFB] text-white w-full py-2 rounded-full hover:bg-[#E05A00] transition-all duration-300 font-medium text-center block"
+                    className="bg-[#1a1a1a] text-white w-full py-2.5 hover:bg-black transition-colors font-medium text-xs uppercase tracking-[0.15em] text-center block"
                   >
                     Comprar
                   </Link>

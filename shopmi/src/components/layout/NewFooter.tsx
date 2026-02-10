@@ -1,13 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logoIcon from "../../assets/images/logo-pico.svg";
+import { getCollections, Collection } from "../../lib/shopify";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [shopCollections, setShopCollections] = useState<Collection[]>([]);
+
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const collections = await getCollections();
+        setShopCollections(collections.slice(0, 6));
+      } catch (error) {
+        console.error("Erro ao buscar coleções para o rodapé:", error);
+      }
+    };
+    fetchCollections();
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,26 +33,15 @@ const Footer = () => {
   };
 
   const companyLinks = [
-    { label: "Search", href: "/search" },
-    { label: "Contact", href: "/contact" },
-    { label: "Terms", href: "/terms" },
-    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Busca", href: "/search" },
+    { label: "Contato", href: "/contato" },
+    { label: "Termos e Condições", href: "/termos" },
+    { label: "Política de Privacidade", href: "/privacidade" },
   ];
 
   const pagesLinks = [
     { label: "FAQ", href: "/faq" },
-    { label: "Blog", href: "/blog" },
-    { label: "Lookbook", href: "/lookbook" },
-    { label: "Collections", href: "/shop" },
-  ];
-
-  const shopLinks = [
-    { label: "Tops", href: "/shop/tops" },
-    { label: "T-shirts", href: "/shop/t-shirts" },
-    { label: "Knitwear", href: "/shop/knitwear" },
-    { label: "Dresses", href: "/shop/dresses" },
-    { label: "Bottoms", href: "/shop/bottoms" },
-    { label: "Jackets & Coats", href: "/shop/jackets-coats" },
+    { label: "Coleções", href: "/shop" },
   ];
 
   const socialLinks = [
@@ -161,22 +164,32 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Shop Links */}
+          {/* Shop Links - Dynamic Collections */}
           <div className="lg:col-span-3">
             <h3 className="text-[10px] sm:text-xs tracking-[0.2em] uppercase text-gray-400 mb-4">
-              Shop
+              Categorias
             </h3>
             <ul className="space-y-2">
-              {shopLinks.map((link) => (
-                <li key={link.label}>
+              {shopCollections.map((collection) => (
+                <li key={collection.id}>
                   <Link
-                    href={link.href}
+                    href={`/shop/${collection.handle}`}
                     className="text-sm text-white hover:text-gray-300 transition-colors"
                   >
-                    {link.label}
+                    {collection.title}
                   </Link>
                 </li>
               ))}
+              {shopCollections.length === 0 && (
+                <li>
+                  <Link
+                    href="/shop"
+                    className="text-sm text-white hover:text-gray-300 transition-colors"
+                  >
+                    Ver todas
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -228,25 +241,13 @@ const Footer = () => {
             </p>
             <div className="flex items-center gap-2">
               {/* Payment Icons */}
-              <svg className="w-8 h-5" viewBox="0 0 48 32" fill="none">
-                <rect width="48" height="32" rx="4" fill="#1a1f71" />
-                <path d="M19.5 21L22.5 11H26L23 21H19.5Z" fill="#fff" />
-                <path
-                  d="M33 11C32 10.5 30.5 10 28.5 10C24.5 10 21.5 12.5 21.5 16C21.5 18.5 23.5 20 25.5 20C27 20 28 19.5 28.5 19L27.5 22.5C26.5 23 25.5 23 24.5 23C20.5 23 17.5 20 17.5 16C17.5 11.5 21 8 26 8C28 8 29.5 8.5 30 9L33 11Z"
-                  fill="#fff"
-                />
-              </svg>
-              <svg className="w-8 h-5" viewBox="0 0 48 32" fill="none">
-                <rect width="48" height="32" rx="4" fill="#eb001b" />
-                <circle cx="30" cy="16" r="8" fill="#f79e1b" />
-                <path d="M18 24C22.4183 24 26 20.4183 26 16C26 11.5817 22.4183 8 18 8C13.5817 8 10 11.5817 10 16C10 20.4183 13.5817 24 18 24Z" fill="#eb001b" />
-              </svg>
-              <svg className="w-8 h-5" viewBox="0 0 48 32" fill="none">
-                <rect width="48" height="32" rx="4" fill="#000" />
-                <circle cx="16" cy="16" r="6" fill="#eb001b" />
-                <circle cx="32" cy="16" r="6" fill="#f79e1b" />
-                <path d="M24 12C25.5 13 26.5 14.5 26.5 16C26.5 17.5 25.5 19 24 20C22.5 19 21.5 17.5 21.5 16C21.5 14.5 22.5 13 24 12Z" fill="#ff5f00" />
-              </svg>
+              <Image src="/Assets/Images/Visa.svg" alt="Visa" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/Mastercard.svg" alt="Mastercard" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/pix.svg" alt="Pix" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/PayPal.svg" alt="PayPal" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/GooglePay.svg" alt="Google Pay" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/DinersClub.svg" alt="Diners Club" width={36} height={24} className="h-5 w-auto" />
+              <Image src="/Assets/Images/Discover.svg" alt="Discover" width={36} height={24} className="h-5 w-auto" />
             </div>
           </div>
         </div>

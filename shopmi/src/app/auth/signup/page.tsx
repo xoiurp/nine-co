@@ -96,7 +96,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <Link href="/" className="inline-block">
@@ -106,14 +106,14 @@ export default function SignUpPage() {
               className="h-12 w-auto mx-auto"
             />
           </Link>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
+          <h2 className="mt-6 text-3xl font-bold text-[#1a1a1a]">
             Crie sua conta
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-[#666]">
             Ou{' '}
             <Link
               href="/auth/signin"
-              className="font-medium text-[#AE6FFB] hover:text-[#E05A00]"
+              className="font-medium text-[#1a1a1a] hover:text-[#666]"
             >
               faça login na sua conta existente
             </Link>
@@ -144,7 +144,7 @@ export default function SignUpPage() {
               <div className="space-y-2">
                 <Label htmlFor="name">Nome Completo</Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <User className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="name"
                     name="name"
@@ -161,7 +161,7 @@ export default function SignUpPage() {
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="email"
                     name="email"
@@ -178,7 +178,7 @@ export default function SignUpPage() {
               <div className="space-y-2">
                 <Label htmlFor="password">Senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="password"
                     name="password"
@@ -192,7 +192,7 @@ export default function SignUpPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-3 text-[#999] hover:text-[#666]"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -206,7 +206,7 @@ export default function SignUpPage() {
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirmar Senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
@@ -220,7 +220,7 @@ export default function SignUpPage() {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-3 text-[#999] hover:text-[#666]"
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -233,20 +233,20 @@ export default function SignUpPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-[#AE6FFB] hover:bg-[#E05A00]"
+                className="w-full bg-[#1a1a1a] hover:bg-black"
                 disabled={isLoading}
               >
                 {isLoading ? 'Criando conta...' : 'Criar Conta'}
               </Button>
             </form>
 
-            <div className="mt-4 text-center text-sm text-gray-600">
+            <div className="mt-4 text-center text-sm text-[#666]">
               Ao criar uma conta, você concorda com nossos{' '}
-              <Link href="/terms" className="text-[#AE6FFB] hover:text-[#E05A00]">
+              <Link href="/termos" className="text-[#1a1a1a] hover:text-[#666]">
                 Termos de Uso
               </Link>{' '}
               e{' '}
-              <Link href="/privacy" className="text-[#AE6FFB] hover:text-[#E05A00]">
+              <Link href="/privacidade" className="text-[#1a1a1a] hover:text-[#666]">
                 Política de Privacidade
               </Link>
             </div>

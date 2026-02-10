@@ -10,7 +10,18 @@
       "Bash(git branch:*)",
       "Bash(git remote add:*)",
       "Bash(git push:*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(ls:*)",
+      "Bash(dialog \")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(claude:*)",
+      "Bash(npm root:*)",
+      "Bash(npx next build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx prisma db seed:*)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

@@ -17,7 +17,6 @@ function getNextAuthSecret() {
   // Gerar um secret temporário para build
   const crypto = require('crypto')
   const tempSecret = crypto.randomBytes(32).toString('base64')
-  console.warn('⚠️ NEXTAUTH_SECRET não definido. Usando secret temporário para build.')
   return tempSecret
 }
 
@@ -54,10 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        console.log('Authorize attempt:', { email: credentials?.email });
-
         if (!credentials?.email || !credentials?.password) {
-          console.error('Missing credentials');
           return null;
         }
 
@@ -68,15 +64,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         if (!user) {
-          console.error('User not found in DB:', credentials.email);
           return null;
         }
 
-        console.log('User found in DB:', { id: user.id, email: user.email, role: user.role });
-
         // Validar role - aceitar tanto ADMIN quanto CLIENT
         if (user.role !== 'ADMIN' && user.role !== 'CLIENT') {
-          console.error('User role not valid:', { email: user.email, role: user.role });
           return null;
         }
 
@@ -86,11 +78,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
 
         if (!isPasswordValid) {
-          console.error('Invalid password for user:', user.email);
           return null;
         }
 
-        console.log('Password valid, user authenticated:', user.email);
         return {
           id: user.id,
           email: user.email,
@@ -125,15 +115,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     // Callback para redirecionamento personalizado
     async redirect({ url, baseUrl }) {
       const actualBaseUrl = getBaseUrl()
-      
-      console.log('NextAuth redirect callback:', {
-        url,
-        baseUrl,
-        actualBaseUrl,
-        isRelative: url.startsWith('/'),
-        isSameOrigin: url.startsWith(actualBaseUrl)
-      })
-      
+
       // Se a URL for relativa, usar a baseUrl atual
       if (url.startsWith('/')) {
         return `${actualBaseUrl}${url}`

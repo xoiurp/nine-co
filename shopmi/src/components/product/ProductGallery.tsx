@@ -47,7 +47,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
       {images.length > 1 && (
         <div className="hidden md:flex flex-col justify-center gap-2 mr-4 w-20">
           <div className={`flex justify-center mb-2 cursor-pointer ${isScrollUpDisabled ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={handleScrollUp}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#999]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
             </svg>
           </div>
@@ -58,7 +58,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
                 <div
                   key={index}
                   className={`relative h-20 w-full rounded-md overflow-hidden cursor-pointer border ${
-                    selectedImageIndex === index ? 'border-[#AE6FFB]' : 'hover:border-[#AE6FFB] border-gray-200'
+                    selectedImageIndex === index ? 'border-[#1a1a1a]' : 'hover:border-[#1a1a1a] border-[#e0e0e0]'
                   }`}
                   onClick={() => handleThumbnailClick(index)}
                 >
@@ -76,7 +76,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
           </div>
 
           <div className={`flex justify-center mt-2 cursor-pointer ${isScrollDownDisabled ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={handleScrollDown}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#999]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
@@ -95,7 +95,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
               priority
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+            <div className="w-full h-full flex items-center justify-center bg-[#f5f5f5] text-[#999]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-16 w-16"
@@ -121,7 +121,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
               <div
                 key={index}
                 className={`relative h-20 w-20 flex-shrink-0 rounded-md overflow-hidden cursor-pointer border ${
-                  selectedImageIndex === index ? 'border-[#AE6FFB]' : 'hover:border-[#AE6FFB] border-gray-200'
+                  selectedImageIndex === index ? 'border-[#1a1a1a]' : 'hover:border-[#1a1a1a] border-[#e0e0e0]'
                 }`}
                 onClick={() => handleThumbnailClick(index)}
               >
@@ -139,7 +139,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images, selectedImageIn
         )}
 
         {/* Zoom button */}
-        <div className="flex items-center mt-4 text-gray-600">
+        <div className="flex items-center mt-4 text-[#666]">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>

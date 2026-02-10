@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Header from "./Header";
 import NewHeader from "./NewHeader";
 
 export default function ConditionalHeader() {
@@ -12,11 +11,11 @@ export default function ConditionalHeader() {
     return null;
   }
 
-  // Usar o novo header na página inicial
-  if (pathname === "/") {
+  // Páginas com fundo escuro/hero (header transparente padrão)
+  if (pathname === "/" || pathname === "/shop" || pathname.startsWith("/shop/")) {
     return <NewHeader />;
   }
 
-  // Usar o header antigo nas outras páginas
-  return <Header />;
+  // Todas as demais páginas usam NewHeader com cores invertidas (fundo claro)
+  return <NewHeader invertColors />;
 }

@@ -51,11 +51,11 @@ const BannerSlider = () => {
         }
         .swiper-button-next,
         .swiper-button-prev {
-          @apply w-12 h-12 rounded-full bg-white text-black flex items-center justify-center border border-gray-300;
+          @apply w-12 h-12 bg-white text-black flex items-center justify-center border border-[#e0e0e0];
         }
         .swiper-button-next:hover,
         .swiper-button-prev:hover {
-          @apply bg-[#AE6FFB] text-white border-[#AE6FFB];
+          @apply bg-[#1a1a1a] text-white border-[#1a1a1a];
         }
         .swiper-button-next::after,
         .swiper-button-prev::after {

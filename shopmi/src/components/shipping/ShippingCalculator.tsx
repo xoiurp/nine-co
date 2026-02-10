@@ -44,13 +44,9 @@ export default function ShippingCalculator() {
     setSelectedShipping(null); // Limpa a seleção anterior
 
     try {
-      console.log(`Enviando requisição para calcular frete para CEP: ${cep}`);
-      
       const response = await axios.post<ShippingOption[]>('/api/shipping/calculate', {
         cep: cep.replace('-', ''), // Envia CEP sem hífen
       });
-
-      console.log('Resposta do cálculo de frete:', response.data);
 
       if (response.data && response.data.length > 0) {
         setShippingOptions(response.data);
@@ -58,8 +54,6 @@ export default function ShippingCalculator() {
         setError('Nenhuma opção de frete encontrada para este CEP.');
       }
     } catch (err: unknown) { // Alterado para unknown
-      console.error("Erro ao calcular frete:", err);
-      
       let errorMessage = 'Erro ao calcular o frete. Tente novamente.';
       
       if (axios.isAxiosError(err) && err.response?.data) { // Verifica se é um erro do Axios
@@ -70,7 +64,6 @@ export default function ShippingCalculator() {
           errorMessage = (errorData as { error: string }).error;
           
           if ('details' in errorData && typeof (errorData as { details: string }).details === 'string') {
-            console.error('Detalhes do erro:', (errorData as { details: string }).details);
             errorMessage += `: ${(errorData as { details: string }).details}`;
           }
         }
@@ -111,7 +104,7 @@ export default function ShippingCalculator() {
   }
 
   return (
-    <div className="border border-gray-200 rounded-md p-4">
+    <div className="border border-[#e0e0e0] p-4">
       <p className="font-medium mb-2">Calcular frete e prazo</p>
       <div className="flex items-center gap-2 mb-3">
         <IMaskInput
@@ -140,7 +133,7 @@ export default function ShippingCalculator() {
       {shippingOptions.length > 0 && (
         <div className="mt-4 space-y-2">
           <p className="text-sm font-medium">Opções de entrega:</p>
-          <ul className="text-sm text-gray-700 space-y-3">
+          <ul className="text-sm text-[#666] space-y-3">
             {shippingOptions.map((option) => (
               <li key={option.id} className="flex items-start">
                 <div className="flex items-center h-5">
@@ -148,13 +141,13 @@ export default function ShippingCalculator() {
                     id={`shipping-option-${option.id}`}
                     name="shipping-option"
                     type="radio"
-                    className="h-4 w-4 text-orange-500 border-gray-300 focus:ring-orange-500"
+                    className="h-4 w-4 text-[#1a1a1a] border-[#e0e0e0] focus:ring-[#1a1a1a] accent-[#1a1a1a]"
                     checked={selectedShipping?.id === option.id}
                     onChange={() => handleSelectOption(option)}
                   />
                 </div>
                 <div className="ml-3 flex justify-between w-full">
-                  <label htmlFor={`shipping-option-${option.id}`} className="font-medium text-gray-700 cursor-pointer flex items-center">
+                  <label htmlFor={`shipping-option-${option.id}`} className="font-medium text-[#1a1a1a] cursor-pointer flex items-center">
                     {option.company?.picture && (
                       <div className="relative h-4 w-auto mr-2" style={{ maxWidth: '60px' }}>
                         <Image
@@ -170,7 +163,7 @@ export default function ShippingCalculator() {
                   </label>
                   <div className="text-right">
                     <div className="font-medium">{formatPrice(option.price)}</div>
-                    <div className="text-xs text-gray-500">{formatDeliveryTime(option)}</div>
+                    <div className="text-xs text-[#999]">{formatDeliveryTime(option)}</div>
                   </div>
                 </div>
               </li>

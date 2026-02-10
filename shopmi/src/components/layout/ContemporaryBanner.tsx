@@ -24,8 +24,8 @@ const ContemporaryBanner: React.FC<ContemporaryBannerProps> = ({ collection }) =
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
           ) : (
-            <div className="w-full h-full bg-gray-900 flex items-center justify-center">
-              <span className="text-gray-600">Collection Image</span>
+            <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+              <span className="text-[#666]">Imagem da coleção</span>
             </div>
           )}
         </div>
@@ -33,16 +33,16 @@ const ContemporaryBanner: React.FC<ContemporaryBannerProps> = ({ collection }) =
         {/* Right - Content */}
         <div className="flex flex-col items-center justify-center px-8 py-16 lg:px-16 lg:py-20 text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight mb-4">
-            Classic Meets Contemporary
+            Clássico encontra o contemporâneo
           </h2>
-          <p className="text-sm sm:text-base text-gray-400 max-w-md mb-8 leading-relaxed">
-            Redefine timeless styles with a modern twist—explore the Heritage Collection and the Future Edit.
+          <p className="text-sm sm:text-base text-[#999] max-w-md mb-8 leading-relaxed">
+            Redefina estilos atemporais com um toque moderno — explore a Coleção Heritage e o Future Edit.
           </p>
           <Link
             href={collection?.handle ? `/shop/${collection.handle}` : "/shop"}
-            className="px-8 py-3 bg-white text-black text-[11px] sm:text-xs tracking-[0.2em] uppercase font-medium rounded-full hover:bg-gray-100 transition-colors"
+            className="px-8 py-3 bg-white text-black text-[11px] sm:text-xs tracking-[0.2em] uppercase font-medium hover:bg-[#f5f5f5] transition-colors"
           >
-            Discover More
+            Descubra mais
           </Link>
         </div>
       </div>

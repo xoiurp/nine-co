@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "../../lib/shopify";
@@ -10,18 +10,54 @@ interface ItemOfTheWeekProps {
   product: Product | null;
 }
 
-const SIZES = ["XS", "S", "M", "L"];
-const COLORS = [
-  { name: "Black", value: "#000000" },
-  { name: "White", value: "#FFFFFF" },
-];
-
 const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
-  const [selectedSize, setSelectedSize] = useState("XS");
-  const [selectedColor, setSelectedColor] = useState("Black");
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const { addItem } = useCart();
+  const { addToCart, setCartSheetOpen } = useCart();
+
+  // Extract dynamic sizes from product variants
+  const availableSizes = useMemo(() => {
+    if (!product?.variants?.edges) return [];
+    const sizes = new Set<string>();
+    product.variants.edges.forEach((edge) => {
+      const sizeOpt = edge.node.selectedOptions?.find(
+        (opt) => opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size"
+      );
+      if (sizeOpt) sizes.add(sizeOpt.value);
+    });
+    return Array.from(sizes);
+  }, [product]);
+
+  // Extract dynamic colors from product variants
+  const availableColors = useMemo(() => {
+    if (!product?.variants?.edges) return [];
+    const colorMap = new Map<string, string>();
+    product.variants.edges.forEach((edge) => {
+      const colorOpt = edge.node.selectedOptions?.find(
+        (opt) => opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color"
+      );
+      if (colorOpt && !colorMap.has(colorOpt.value)) {
+        const hex = edge.node.metafield?.value || "#cccccc";
+        colorMap.set(colorOpt.value, hex);
+      }
+    });
+    return Array.from(colorMap, ([name, value]) => ({ name, value }));
+  }, [product]);
+
+  // Initialize selections
+  React.useEffect(() => {
+    if (availableSizes.length > 0 && !selectedSize) {
+      setSelectedSize(availableSizes[0]);
+    }
+  }, [availableSizes, selectedSize]);
+
+  React.useEffect(() => {
+    if (availableColors.length > 0 && !selectedColor) {
+      setSelectedColor(availableColors[0].name);
+    }
+  }, [availableColors, selectedColor]);
 
   if (!product) {
     return null;
@@ -35,14 +71,18 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
   const handleAddToCart = () => {
     if (product.variants?.edges?.[0]?.node) {
       const variant = product.variants.edges[0].node;
-      addItem({
+      addToCart({
+        id: variant.id,
         variantId: variant.id,
         quantity: quantity,
         title: product.title,
         price: parseFloat(variant.price.amount),
+        currencyCode: variant.price.currencyCode,
         image: images[0]?.node?.transformedSrc || "",
-        productHandle: product.handle,
+        productId: product.id,
+        handle: product.handle,
       });
+      setCartSheetOpen(true);
     }
   };
 
@@ -54,12 +94,19 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const formatPrice = (amount: string) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(parseFloat(amount));
+  };
+
   return (
-    <div className="w-full bg-[#f5f5f5]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div className="w-full bg-white">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Header */}
-        <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-8 sm:mb-12">
-          Item of the <span className="italic">week</span>
+        <h2 className="text-3xl sm:text-4xl font-light text-[#1a1a1a] mb-8 sm:mb-12">
+          Item da <span className="italic">semana</span>
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -69,7 +116,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
             <div className="relative aspect-square bg-white">
               {currentImage ? (
                 <Image
-                  src={currentImage.transformedSrc || currentImage.originalSrc || ""}
+                  src={currentImage.transformedSrc || ""}
                   alt={currentImage.altText || product.title}
                   fill
                   className="object-contain p-8"
@@ -77,7 +124,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   priority
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-gray-300">
+                <div className="w-full h-full flex items-center justify-center text-[#e0e0e0]">
                   <svg className="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -89,8 +136,8 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-900/80 hover:bg-gray-900 flex items-center justify-center transition-colors text-white"
-                    aria-label="Previous image"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#1a1a1a]/80 hover:bg-[#1a1a1a] flex items-center justify-center transition-colors text-white"
+                    aria-label="Imagem anterior"
                     type="button"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,8 +146,8 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-gray-900/80 hover:bg-gray-900 flex items-center justify-center transition-colors text-white"
-                    aria-label="Next image"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#1a1a1a]/80 hover:bg-[#1a1a1a] flex items-center justify-center transition-colors text-white"
+                    aria-label="Próxima imagem"
                     type="button"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +159,7 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
 
               {/* Image Counter */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-[#666]">
                   {String(currentImageIndex + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
                 </span>
               </div>
@@ -122,99 +169,98 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
           {/* Right - Product Details */}
           <div className="flex flex-col">
             {/* Product Title */}
-            <h3 className="text-sm sm:text-base font-medium text-gray-900 uppercase tracking-wide mb-1">
+            <h3 className="text-sm sm:text-base font-medium text-[#1a1a1a] uppercase tracking-wide mb-1">
               {product.title}
             </h3>
 
-            {/* Theme */}
-            <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-4">
-              Release Theme
+            {/* Product Type */}
+            <p className="text-[10px] sm:text-xs text-[#666] uppercase tracking-wider mb-4">
+              {product.productType || "Destaque"}
             </p>
 
             {/* Price */}
-            <p className="text-sm sm:text-base text-gray-900 mb-6">
-              {currency === "BRL" ? "R$" : currency}{" "}
-              {price
-                ? parseFloat(price).toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                  })
-                : "0,00"}{" "}
-              <span className="text-xs text-gray-400 ml-1">Taxes included</span>
+            <p className="text-sm sm:text-base text-[#1a1a1a] mb-6">
+              {price ? formatPrice(price) : "R$ 0,00"}{" "}
+              <span className="text-xs text-[#999] ml-1">Impostos inclusos</span>
             </p>
 
-            {/* Size Selector */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-600">
-                  Size {selectedSize}
-                </span>
-                <button 
-                  type="button"
-                  className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 hover:text-gray-600 underline"
-                >
-                  Size Guide
-                </button>
-              </div>
-              <div className="flex gap-2">
-                {SIZES.map((size) => (
+            {/* Size Selector - Dynamic */}
+            {availableSizes.length > 0 && (
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#666]">
+                    Tamanho {selectedSize}
+                  </span>
                   <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
                     type="button"
-                    className={`w-10 h-10 text-xs font-medium border transition-colors ${
-                      selectedSize === size
-                        ? "border-gray-900 text-gray-900"
-                        : "border-gray-300 text-gray-600 hover:border-gray-500"
-                    }`}
+                    className="text-[10px] sm:text-xs uppercase tracking-wider text-[#999] hover:text-[#666] underline"
                   >
-                    {size}
+                    Guia de tamanhos
                   </button>
-                ))}
+                </div>
+                <div className="flex gap-2">
+                  {availableSizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      type="button"
+                      className={`w-10 h-10 text-xs font-medium border transition-colors ${
+                        selectedSize === size
+                          ? "border-[#1a1a1a] text-[#1a1a1a]"
+                          : "border-[#e0e0e0] text-[#666] hover:border-[#999]"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Color Selector */}
-            <div className="mb-6">
-              <span className="text-[10px] sm:text-xs uppercase tracking-wider text-gray-600 block mb-2">
-                Color {selectedColor}
-              </span>
-              <div className="flex gap-3">
-                {COLORS.map((color) => (
-                  <button
-                    key={color.name}
-                    onClick={() => setSelectedColor(color.name)}
-                    type="button"
-                    className={`relative w-6 h-6 border-2 transition-transform ${
-                      selectedColor === color.name
-                        ? "border-gray-900 scale-110"
-                        : "border-gray-300 hover:scale-105"
-                    }`}
-                    style={{ backgroundColor: color.value }}
-                    aria-label={color.name}
-                  />
-                ))}
+            {/* Color Selector - Dynamic */}
+            {availableColors.length > 0 && (
+              <div className="mb-6">
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#666] block mb-2">
+                  Cor {selectedColor}
+                </span>
+                <div className="flex gap-3">
+                  {availableColors.map((color) => (
+                    <button
+                      key={color.name}
+                      onClick={() => setSelectedColor(color.name)}
+                      type="button"
+                      className={`relative w-6 h-6 border-2 transition-transform ${
+                        selectedColor === color.name
+                          ? "border-[#1a1a1a] scale-110"
+                          : "border-[#e0e0e0] hover:scale-105"
+                      }`}
+                      style={{ backgroundColor: color.value }}
+                      aria-label={color.name}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Quantity and Actions */}
             <div className="mt-auto">
               {/* Quantity Selector */}
               <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center border border-gray-300">
+                <div className="flex items-center border border-[#e0e0e0]">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     type="button"
-                    className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-[#666] hover:bg-[#f5f5f5] transition-colors"
                   >
                     −
                   </button>
-                  <span className="w-10 h-10 flex items-center justify-center text-sm text-gray-900">
+                  <span className="w-10 h-10 flex items-center justify-center text-sm text-[#1a1a1a]">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
                     type="button"
-                    className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-[#666] hover:bg-[#f5f5f5] transition-colors"
                   >
                     +
                   </button>
@@ -225,25 +271,29 @@ const ItemOfTheWeek: React.FC<ItemOfTheWeekProps> = ({ product }) => {
               <button
                 onClick={handleAddToCart}
                 type="button"
-                className="w-full py-4 bg-black text-white text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-gray-800 transition-colors"
+                className="w-full py-4 bg-[#1a1a1a] text-white text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-black transition-colors"
               >
-                Add to Cart
+                Adicionar ao carrinho
               </button>
 
               {/* Buy It Now */}
-              <button 
+              <button
                 type="button"
-                className="w-full py-4 border border-gray-900 text-gray-900 text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-gray-900 hover:text-white transition-colors mt-3"
+                onClick={() => {
+                  handleAddToCart();
+                  setTimeout(() => { window.location.href = "/checkout"; }, 300);
+                }}
+                className="w-full py-4 border border-[#1a1a1a] text-[#1a1a1a] text-xs sm:text-sm tracking-[0.15em] uppercase font-medium hover:bg-[#1a1a1a] hover:text-white transition-colors mt-3"
               >
-                Buy It Now
+                Comprar agora
               </button>
 
               {/* View Product */}
               <Link
                 href={`/product/${product.handle}`}
-                className="block text-center text-[10px] sm:text-xs tracking-[0.15em] uppercase text-gray-500 hover:text-gray-900 underline transition-colors py-4"
+                className="block text-center text-[10px] sm:text-xs tracking-[0.15em] uppercase text-[#666] hover:text-[#1a1a1a] underline transition-colors py-4"
               >
-                View Product
+                Ver produto
               </Link>
             </div>
           </div>

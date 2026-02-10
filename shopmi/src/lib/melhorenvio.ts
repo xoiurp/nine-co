@@ -83,12 +83,6 @@ function formatToken(token: string | undefined): string {
   return `Bearer ${token}`;
 }
 
-// Log para depuração (não inclui o token completo por segurança)
-console.log('Inicializando cliente API do Melhor Envio');
-console.log('Client ID usado:', CLIENT_ID);
-console.log('Token (primeiros 10 caracteres):', 
-  TOKEN ? TOKEN.substring(0, 10) + '...' : 'não definido');
-
 // Criar instância do axios com configurações padrão
 const apiClient = axios.create({
   baseURL: API_URL,
@@ -101,45 +95,22 @@ const apiClient = axios.create({
   timeout: 5000 // 5 segundos
 });
 
-// Interceptador para log de requisições
+// Interceptador para requisições
 apiClient.interceptors.request.use(
   (config) => {
-    console.log('🚀 Requisição para Melhor Envio:', {
-      method: config.method,
-      url: config.url,
-      headers: {
-        ...config.headers,
-        Authorization: config.headers.Authorization ? 'Bearer [HIDDEN]' : undefined
-      },
-      data: config.data
-    });
     return config;
   },
   (error) => {
-    console.error('❌ Erro na requisição:', error);
     return Promise.reject(error);
   }
 );
 
-// Interceptador para log de respostas
+// Interceptador para respostas
 apiClient.interceptors.response.use(
   (response) => {
-    console.log('✅ Resposta do Melhor Envio:', {
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      data: response.data
-    });
     return response;
   },
   (error) => {
-    console.error('❌ Erro na resposta:', {
-      message: error.message,
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      data: error.response?.data,
-      headers: error.response?.headers
-    });
     return Promise.reject(error);
   }
 );
@@ -189,20 +160,8 @@ async function calculateShipment(payload: ShippingCalculatePayload | ShippingCal
       };
     }
     
-    console.log('Enviando requisição para Melhor Envio:', {
-      url: '/me/shipment/calculate',
-      payload: finalPayload
-    });
-    
     const response = await apiClient.post('/me/shipment/calculate', finalPayload);
-    
-    console.log('Resposta recebida do Melhor Envio:', {
-      status: response.status,
-      dataType: typeof response.data,
-      isArray: Array.isArray(response.data),
-      data: response.data
-    });
-    
+
     // Verificar se a resposta é válida
     if (!response.data) {
       throw new Error('Resposta vazia da API do Melhor Envio');
@@ -210,9 +169,6 @@ async function calculateShipment(payload: ShippingCalculatePayload | ShippingCal
     
     // Se a resposta for um objeto de erro em vez de array
     if (!Array.isArray(response.data)) {
-      console.error('Resposta não é um array. Tipo:', typeof response.data);
-      console.error('Conteúdo completo:', JSON.stringify(response.data, null, 2));
-      
       if (response.data.error) {
         throw new Error(response.data.error);
       }
@@ -229,12 +185,6 @@ async function calculateShipment(payload: ShippingCalculatePayload | ShippingCal
     
     return response.data;
   } catch (error: any) {
-    console.error('Erro detalhado ao calcular frete:', {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-      headers: error.response?.headers
-    });
     throw error;
   }
 }
@@ -246,7 +196,6 @@ async function getShipmentServices(): Promise<unknown> {
     const response = await apiClient.get('/me/shipment/services');
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter serviços de envio:', error);
     throw error;
   }
 }
@@ -318,7 +267,6 @@ async function addToCart(item: CartItem): Promise<unknown> {
     const response = await apiClient.post('/me/cart', item);
     return response.data;
   } catch (error) {
-    console.error('Erro ao adicionar ao carrinho:', error);
     throw error;
   }
 }
@@ -329,7 +277,6 @@ async function getCart(): Promise<unknown> {
     const response = await apiClient.get('/me/cart');
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter carrinho:', error);
     throw error;
   }
 }
@@ -342,7 +289,6 @@ async function removeFromCart(orderIds: string[]): Promise<unknown> {
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao remover do carrinho:', error);
     throw error;
   }
 }
@@ -353,7 +299,6 @@ async function checkout(): Promise<unknown> {
     const response = await apiClient.post('/me/shipment/checkout');
     return response.data;
   } catch (error) {
-    console.error('Erro no checkout:', error);
     throw error;
   }
 }
@@ -364,7 +309,6 @@ async function generateLabels(orders: Array<{ id: string }>): Promise<unknown> {
     const response = await apiClient.post('/me/shipment/generate', { orders });
     return response.data;
   } catch (error) {
-    console.error('Erro ao gerar etiquetas:', error);
     throw error;
   }
 }
@@ -375,7 +319,6 @@ async function printLabels(orders: Array<{ id: string }>): Promise<unknown> {
     const response = await apiClient.post('/me/shipment/print', { orders });
     return response.data;
   } catch (error) {
-    console.error('Erro ao imprimir etiquetas:', error);
     throw error;
   }
 }
@@ -386,7 +329,6 @@ async function getLabel(orderId: string): Promise<unknown> {
     const response = await apiClient.get(`/me/shipment/${orderId}/print`);
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter etiqueta:', error);
     throw error;
   }
 }
@@ -397,7 +339,6 @@ async function trackOrders(orders: Array<{ id: string }>): Promise<unknown> {
     const response = await apiClient.post('/me/shipment/tracking', { orders });
     return response.data;
   } catch (error) {
-    console.error('Erro ao rastrear pedidos:', error);
     throw error;
   }
 }
@@ -408,7 +349,6 @@ async function getCompanyInfo(): Promise<unknown> {
     const response = await apiClient.get('/me/company');
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter informações da empresa:', error);
     throw error;
   }
 }
@@ -419,7 +359,6 @@ async function getBalance(): Promise<unknown> {
     const response = await apiClient.get('/me/balance');
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter saldo:', error);
     throw error;
   }
 }

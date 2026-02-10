@@ -47,7 +47,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f5f5] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <Link href="/" className="inline-block">
@@ -57,14 +57,14 @@ export default function SignInPage() {
               className="h-12 w-auto mx-auto"
             />
           </Link>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
+          <h2 className="mt-6 text-3xl font-bold text-[#1a1a1a]">
             Entre na sua conta
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-[#666]">
             Ou{' '}
             <Link
               href="/auth/signup"
-              className="font-medium text-[#AE6FFB] hover:text-[#E05A00]"
+              className="font-medium text-[#1a1a1a] hover:text-[#666]"
             >
               crie uma nova conta
             </Link>
@@ -89,7 +89,7 @@ export default function SignInPage() {
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="email"
                     type="email"
@@ -105,7 +105,7 @@ export default function SignInPage() {
               <div className="space-y-2">
                 <Label htmlFor="password">Senha</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-3 h-4 w-4 text-[#999]" />
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
@@ -118,7 +118,7 @@ export default function SignInPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-3 text-[#999] hover:text-[#666]"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -132,7 +132,7 @@ export default function SignInPage() {
               <div className="flex items-center justify-between">
                 <Link
                   href="/auth/forgot-password"
-                  className="text-sm text-[#AE6FFB] hover:text-[#E05A00]"
+                  className="text-sm text-[#1a1a1a] hover:text-[#666]"
                 >
                   Esqueceu sua senha?
                 </Link>
@@ -140,18 +140,18 @@ export default function SignInPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-[#AE6FFB] hover:bg-[#E05A00]"
+                className="w-full bg-[#1a1a1a] hover:bg-black"
                 disabled={isLoading}
               >
                 {isLoading ? 'Entrando...' : 'Entrar'}
               </Button>
             </form>
 
-            <div className="mt-4 text-center text-sm text-gray-600">
+            <div className="mt-4 text-center text-sm text-[#666]">
               Você é administrador?{' '}
               <Link
                 href="/admin/signin"
-                className="font-medium text-[#AE6FFB] hover:text-[#E05A00]"
+                className="font-medium text-[#1a1a1a] hover:text-[#666]"
               >
                 Faça login aqui
               </Link>

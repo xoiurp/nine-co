@@ -143,7 +143,6 @@ export default function ProductClientDetails({
   mobileCss,
 }: ProductClientDetailsProps) {
 
-  console.log("ProductClientDetails - product.metafields recebido:", JSON.stringify(product.metafields, null, 2)); // Log para depurar a lista de metafields
 
   // Lógica para determinar preserveOriginalStyles e fontSizeMetafield
   let passPreserveOriginalStyles = true; // Padrão: preservar estilos originais, deixar o conteúdo HTML definir a base rem
@@ -159,13 +158,9 @@ export default function ProductClientDetails({
   const remBaseFontSizeMetafieldValue = product.metafields?.find(mf => mf && mf.namespace === 'custom' && mf.key === 'rem_base_font_size')?.value;
   const mobileFontSizeValue = product.metafields?.find(mf => mf && mf.namespace === 'custom' && mf.key === 'mobile_font_size')?.value;
 
-  console.log("ProductClientDetails - useCustomRemBaseMetafieldValue:", useCustomRemBaseMetafieldValue);
-  console.log("ProductClientDetails - remBaseFontSizeMetafieldValue:", remBaseFontSizeMetafieldValue);
-  console.log("ProductClientDetails - mobileFontSizeValue:", mobileFontSizeValue);
 
   // Se o metafield 'use_custom_rem_base' for true
   if (useCustomRemBaseMetafieldValue === 'true') { // Comparar com a string 'true'
-    console.log("ProductClientDetails - Condição useCustomRemBaseMetafieldValue === 'true' é VERDADEIRA");
     passPreserveOriginalStyles = false;
     if (remBaseFontSizeMetafieldValue) {
       passFontSizeMetafield = remBaseFontSizeMetafieldValue;
@@ -173,12 +168,7 @@ export default function ProductClientDetails({
     // Se remBaseFontSizeMetafieldValue não for fornecido, 
     // IsolatedHtmlContentTest usará seu fallback interno (ex: "192px")
     // quando passPreserveOriginalStyles for false e passFontSizeMetafield for undefined.
-  } else {
-    console.log("ProductClientDetails - Condição useCustomRemBaseMetafieldValue === 'true' é FALSA ou metafield ausente");
   }
-
-  console.log("ProductClientDetails - passPreserveOriginalStyles final:", passPreserveOriginalStyles);
-  console.log("ProductClientDetails - passFontSizeMetafield final:", passFontSizeMetafield);
 
   // Estados para o HTML móvel carregado da URL e estado de carregamento
   const [fetchedMobileHtml, setFetchedMobileHtml] = useState<string | undefined>(undefined);
@@ -193,7 +183,6 @@ export default function ProductClientDetails({
       const url = mobileHtmlUrlMetafield.value;
       setIsLoadingMobileHtml(true);
       setFetchedMobileHtml(undefined); // Limpa o HTML anterior
-      console.log(`ProductClientDetails: Fetching mobile HTML from R2 URL: ${url}`);
       fetch(url)
         .then(response => {
           if (!response.ok) {
@@ -203,17 +192,14 @@ export default function ProductClientDetails({
         })
         .then(html => {
           setFetchedMobileHtml(html);
-          console.log("ProductClientDetails: Mobile HTML fetched successfully from R2.");
         })
         .catch(error => {
-          console.error("ProductClientDetails: Error fetching mobile HTML from R2:", error);
           setFetchedMobileHtml(""); // Define como string vazia em caso de erro para evitar usar o HTML desktop
         })
         .finally(() => {
           setIsLoadingMobileHtml(false);
         });
     } else {
-      console.log("ProductClientDetails: No mobile_html_url metafield found.");
       setFetchedMobileHtml(undefined); // Garante que o HTML desktop seja usado se não houver URL
       setIsLoadingMobileHtml(false);
     }
@@ -284,15 +270,8 @@ export default function ProductClientDetails({
 
       setSelectedOptions(initialSelections);
 
-      console.log('✅ Inicialização com primeira variante disponível:', {
-        variantId: firstAvailableVariant.id,
-        color: colorOption?.value,
-        options: initialSelections,
-        stock: firstAvailableVariant.quantityAvailable
-      });
     } else {
       // Fallback: nenhuma variante em estoque - usar primeira de cada
-      console.warn('⚠️ Nenhuma variante em estoque. Usando fallback para primeira de cada opção.');
 
       const initialSelections: { [key: string]: string } = {};
       productOptions.forEach(option => {
@@ -327,7 +306,6 @@ export default function ProductClientDetails({
     });
   }, [variants, selectedColor, selectedOptions, productOptions]);
 
-  console.log('selectedVariant atualizado:', selectedVariant); // Log para depuração
 
   // --- ID da Variante Selecionada ---
   const selectedVariantId = selectedVariant?.id || null;
@@ -339,8 +317,6 @@ export default function ProductClientDetails({
   const galleryImages = useMemo(() => {
     // Acessa as imagens da variante através de mediavariant.references.nodes
     const variantMediaNodes = selectedVariant?.mediavariant?.references?.nodes;
-    console.log('Conteúdo de variantMediaNodes dentro de galleryImages useMemo:', variantMediaNodes); // Log para depuração
-    console.log('Número de imagens em variantMediaNodes:', variantMediaNodes?.length); // Log para depuração do tamanho
     if (variantMediaNodes && variantMediaNodes.length > 0) {
       // Mapeia os nós para extrair transformedSrc e altText da imagem
       return variantMediaNodes.map(node => ({
@@ -398,10 +374,6 @@ export default function ProductClientDetails({
     // Desabilita apenas se NÃO houver NENHUMA variante com estoque para essa cor
     const isDisabled = !hasStockAvailable;
 
-    if (isDisabled) {
-      console.log(`🔴 Cor "${colorName}" desabilitada: nenhuma variante em estoque`);
-    }
-
     return isDisabled;
   }, [variants]);
 
@@ -445,7 +417,6 @@ export default function ProductClientDetails({
       // if (event.origin !== window.location.origin) return;
 
       if (event.data && event.data.type === 'customAddToCartClicked') {
-        console.log('Mensagem "customAddToCartClicked" recebida do iframe. Dados:', event.data);
         if (selectedVariant && selectedVariant.id && selectedVariant.availableForSale) {
           const itemToAdd: CartItem = {
             id: selectedVariant.id,
@@ -466,7 +437,6 @@ export default function ProductClientDetails({
           addToCart(itemToAdd);
           // O CartContext já define isCartOpen = true, o que deve abrir o drawer.
           // O alert foi removido conforme solicitado.
-          console.log('Produto adicionado ao carrinho a partir do clique no iframe:', itemToAdd);
         } else {
           let warningMessage = 'Não foi possível adicionar o produto ao carrinho. ';
           if (!selectedVariant) {
@@ -476,7 +446,6 @@ export default function ProductClientDetails({
           } else if (!selectedVariant.availableForSale) {
             warningMessage += 'A variante selecionada não está disponível para venda.';
           }
-          console.warn(warningMessage, 'SelectedVariant:', selectedVariant);
           // Removido o alert de aviso também, para consistência.
           // Considerar adicionar um sistema de notificação (toast) para esses casos.
         }
@@ -582,10 +551,10 @@ export default function ProductClientDetails({
 
             {/* Código do produto e favoritar */}
             <div className="flex justify-between items-center mb-6">
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-[#999]">
                 Cód.: {product.id.split('/').pop()?.substring(0, 6)}
               </div>
-              <button className="flex items-center text-gray-500 hover:text-[#AE6FFB]">
+              <button className="flex items-center text-[#999] hover:text-[#1a1a1a]">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -607,9 +576,9 @@ export default function ProductClientDetails({
                         key={color.name}
                         onClick={() => !disabled && handleColorChange(color.name)}
                         disabled={disabled}
-                        className={`w-8 h-8 rounded-full border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#AE6FFB] ${
-                          selectedColor === color.name ? 'border-[#AE6FFB] ring-2 ring-[#AE6FFB] ring-offset-1' : 'border-gray-300'
-                        } ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:border-gray-500'}`}
+                        className={`w-8 h-8 rounded-full border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1a1a1a] ${
+                          selectedColor === color.name ? 'border-[#1a1a1a] ring-2 ring-[#1a1a1a] ring-offset-1' : 'border-[#e0e0e0]'
+                        } ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer hover:border-[#999]'}`}
                         style={{ backgroundColor: color.hex }}
                         aria-label={`Selecionar cor ${color.name}${disabled ? ' (Indisponível com opções atuais)' : ''}`}
                         title={disabled ? 'Indisponível com opções atuais' : color.name} // Adiciona title para acessibilidade
@@ -648,7 +617,7 @@ export default function ProductClientDetails({
                               key={value}
                               disabled={disabled}
                               onSelect={() => !disabled && handleOptionChange(option.name, value)}
-                              className={`${disabled ? 'text-gray-400 italic cursor-not-allowed' : 'cursor-pointer'} whitespace-normal`}
+                              className={`${disabled ? 'text-[#999] italic cursor-not-allowed' : 'cursor-pointer'} whitespace-normal`}
                             >
                               {value} {disabled ? '(Indisponível)' : ''}
                             </DropdownMenuItem>
@@ -664,22 +633,22 @@ export default function ProductClientDetails({
             {/* Preço Dinâmico */}
             <div className="mb-6">
               {currentCompareAtPrice && (
-                 <div className="text-gray-500 line-through text-sm">
+                 <div className="text-[#999] line-through text-sm">
                    De {currentCompareAtPrice}
                  </div>
               )}
-              <div className="text-3xl text-[#AE6FFB] font-bold">
+              <div className="text-3xl text-[#1a1a1a] font-bold">
                 {currentPrice}
               </div>
-              <div className="text-sm text-gray-700">Com 8% de desconto à vista</div>
+              <div className="text-sm text-[#666]">Com 8% de desconto à vista</div>
             </div>
 
             {/* Parcelamento */}
-            <div className="mb-8 bg-gray-50 p-4 rounded-md">
-               <div className="text-gray-700">
+            <div className="mb-8 bg-[#f5f5f5] p-4">
+               <div className="text-[#666]">
                  Ou {currentPrice}
                </div>
-               <div className="text-gray-700">
+               <div className="text-[#666]">
                  12 x {selectedVariant
                    ? formatPrice(parseFloat(selectedVariant.price.amount) / 12, selectedVariant.price.currencyCode)
                    : formatPrice(parseFloat(product.priceRange.minVariantPrice.amount) / 12, product.priceRange.minVariantPrice.currencyCode)
@@ -690,10 +659,10 @@ export default function ProductClientDetails({
             {/* Quantidade e botão de adicionar ao carrinho */}
             <div className="mb-8">
               <div className="flex items-center gap-4">
-                <div className="flex border rounded-md">
+                <div className="flex border border-[#e0e0e0]">
                   <button
                     onClick={handleDecreaseQuantity}
-                    className="px-3 py-2 border-r hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-3 py-2 border-r border-[#e0e0e0] hover:bg-[#f5f5f5] disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={quantity <= 1}
                   >
                     -
@@ -707,7 +676,7 @@ export default function ProductClientDetails({
                   />
                   <button
                     onClick={handleIncreaseQuantity}
-                    className="px-3 py-2 border-l hover:bg-gray-100"
+                    className="px-3 py-2 border-l border-[#e0e0e0] hover:bg-[#f5f5f5]"
                   >
                     +
                   </button>
@@ -746,13 +715,13 @@ export default function ProductClientDetails({
             </div>
 
             {/* Calculadora de Frete */}
-            <div className="border-t border-gray-200 pt-6">
+            <div className="border-t border-[#e0e0e0] pt-6">
               <ShippingCalculator />
             </div>
 
             {/* Devolução Grátis (mantido abaixo ou integrado se necessário) */}
-            <div className="mt-4 flex items-center text-gray-600 text-sm">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-[#AE6FFB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="mt-4 flex items-center text-[#666] text-sm">
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-[#1a1a1a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 14V5a2 2 0 00-2-2H6a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" />
                </svg>
                <span>Devolução Grátis</span>
@@ -777,7 +746,7 @@ export default function ProductClientDetails({
                         metafield.value.trim() !== '' &&
                         (metafield.namespace === 'custom' || metafield.namespace === 'specs') &&
                         // Oculta os metafields específicos visualmente, incluindo os de controle de HTML/fonte
-                        !['use custom rem base', 'rem base font size', 'html mobile', 'mobile font size', 'mobile html url'].includes(
+                        !['use custom rem base', 'rem base font size', 'html mobile', 'mobile font size', 'mobile html url', 'tbl tam', 'tbl-tam'].includes(
                           metafield.key.toLowerCase().replace(/[\._-]/g, ' ').replace(/\s+/g, ' ').trim()
                         )
                       ) // Adiciona verificação para 'metafield' ser válido, inclui namespace 'specs' e oculta específicos
@@ -786,7 +755,7 @@ export default function ProductClientDetails({
                           <span className="font-medium w-full sm:w-1/3 pr-2 mb-1 sm:mb-0">
                             {formatMetafieldKey(metafield.key)}:
                           </span>
-                          <span className="text-gray-700 w-full sm:w-2/3">{metafield.value}</span>
+                          <span className="text-[#666] w-full sm:w-2/3">{metafield.value}</span>
                         </div>
                       ))}
                   </div>
@@ -811,7 +780,7 @@ export default function ProductClientDetails({
                         {/* Usaremos um label genérico ou o valor diretamente. */}
                         Informação Adicional: {/* Usando label fixo */}
                       </span>
-                      <span className="text-gray-700 w-2/3">{product.metafield.value}</span>
+                      <span className="text-[#666] w-2/3">{product.metafield.value}</span>
                     </div>
                   </div>
                 </AccordionContent>
@@ -821,7 +790,7 @@ export default function ProductClientDetails({
         )}
 
         {/* Título da seção "Detalhes do Produto" */}
-        <div className="w-full mt-12 border-t border-gray-200 pt-12">
+        <div className="w-full mt-12 border-t border-[#e0e0e0] pt-12">
           <h2 className="text-2xl font-bold mb-6 text-center">Detalhes do Produto</h2>
         </div>
       </div>

@@ -67,11 +67,10 @@
 /* Estilos personalizados para o slider de ofertas exclusivas */
 .exclusive-offers-slider .swiper-button-next,
 .exclusive-offers-slider .swiper-button-prev {
-  color: #AE6FFB;
+  color: #1a1a1a;
   background-color: rgba(255, 255, 255, 0.8);
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +84,7 @@
 
 .exclusive-offers-slider .swiper-button-next:hover,
 .exclusive-offers-slider .swiper-button-prev:hover {
-  background-color: #AE6FFB;
+  background-color: #1a1a1a;
   color: white;
 }
 
@@ -290,4 +289,13 @@ nav::after,
 /* Fix for Radix UI focus guards */
 [data-radix-focus-guard] {
   display: none !important;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

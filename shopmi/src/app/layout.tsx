@@ -1,6 +1,5 @@
 ﻿import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Script from "next/script";
 import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import { AuthProvider } from "../context/AuthContext";
@@ -43,20 +42,6 @@ export default function RootLayout({
       <body
         className={`${miSans.variable} antialiased`}
       >
-        {/* Google tag (gtag.js) */}
-        <Script
-          src=""
-          strategy="afterInteractive"
-        />
-        <Script id="google-ads-config" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'SEU-ID-GOOGLE-ADS-AQUI');
-          `}
-        </Script>
-
         <AuthProvider>
           <CartProvider>
             <div className="flex flex-col min-h-screen">

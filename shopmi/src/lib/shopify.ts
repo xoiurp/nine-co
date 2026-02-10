@@ -82,6 +82,10 @@ export interface Product {
       };
     }[];
   };
+  options?: { // Opções do produto (Tamanho, Cor, etc)
+    name: string;
+    values: string[];
+  }[];
   metafield?: { // Este é para um metafield singular específico, como descri_curta
     value: string;
   };
@@ -353,8 +357,6 @@ export async function getProducts(
   
   const queryArgsDefsString = queryArgsDefsParts.join(", ");
   const productArgsString = productArgsParts.join(", ");
-  console.log("[ShopifyLib GetProducts] productArgsString:", productArgsString); 
-
   const gqlQuery = `
     query GetProducts(${queryArgsDefsString}) {
       products(${productArgsString}) {
@@ -374,11 +376,17 @@ export async function getProducts(
             metafield(namespace: "custom", key: "descri_curta") {
               value
             }
+            # Adicionando busca por opções do produto (tamanho, cor, etc)
+            options {
+              name
+              values
+            }
             # Adicionando busca por variantes para compareAtPrice, cores e estoque
             variants(first: 10) { # Limita a busca de variantes para não sobrecarregar
               edges {
                 node {
                   id
+                  title
                   price {
                     amount
                     currencyCode
@@ -389,6 +397,10 @@ export async function getProducts(
                   }
                   availableForSale
                   quantityAvailable # Quantidade em estoque
+                  selectedOptions {
+                    name
+                    value
+                  }
                   # Adiciona busca pelo metafield da cor na variante
                   metafield(namespace: "custom", key: "cor") {
                     value
@@ -396,7 +408,7 @@ export async function getProducts(
                 }
               }
             }
-            images(first: 1) {
+            images(first: 2) {
               edges {
                 node {
                   transformedSrc(maxWidth: 500, maxHeight: 500, preferredContentType: WEBP)
@@ -417,27 +429,13 @@ export async function getProducts(
   `;
 
   try {
-    console.log("[ShopifyLib GetProducts] Constructed gqlQuery String:\n", gqlQuery);
-    console.log("[ShopifyLib GetProducts] GQL Variables:", JSON.stringify(variables, null, 2));
-    
     const response = await shopifyFetch<{ products: ProductsConnection }>(
       gqlQuery,
       variables,
       fetchOptions // Passa o objeto fetchOptions diretamente
     );
 
-    // Log da resposta completa da API quando um filtro de preço está ativo
-    if (variables.query && variables.query.includes("price:")) {
-      // Se houver erro, response.data pode não existir.
-      if ('data' in response && response.data) {
-        console.log("[ShopifyLib GetProducts] API Response (for price filter query):", JSON.stringify(response.data, null, 2));
-      } else if ('errors' in response) {
-        console.log("[ShopifyLib GetProducts] API Error (for price filter query):", JSON.stringify(response.errors, null, 2));
-      }
-    }
-
     if ('errors' in response) {
-      console.warn("[ShopifyLib GetProducts] Errors from shopifyFetch:", response.errors);
       // Retornar uma estrutura vazia válida para evitar erros de runtime
       return {
         edges: [],
@@ -448,7 +446,6 @@ export async function getProducts(
     if (response.data && response.data.products) {
       return response.data.products;
     } else {
-      console.warn("[ShopifyLib GetProducts] No products data in response:", response.data ? response.data : response); // Log mais detalhado da resposta
       // Retornar uma estrutura vazia válida para evitar erros de runtime
       return {
         edges: [],
@@ -457,8 +454,6 @@ export async function getProducts(
     }
   } catch (error)
  {
-    console.error('Erro ao buscar produtos:', error);
-    console.warn('Usando dados mockados para produtos devido a erro na API');
     const { mockProducts } = createMockData();
     // Simulação de paginação para mock data
     let hasNext = false;
@@ -618,7 +613,10 @@ export async function getProductByHandle(
           {namespace: "custom", key: "sw_resolucao"},
           {namespace: "custom", key: "sw_tamanho_tela"},
           {namespace: "custom", key: "sw_tela_sensivel_ao_toque"},
-          {namespace: "custom", key: "sw_tipo_tela"}
+          {namespace: "custom", key: "sw_tipo_tela"},
+          # Tabela de medidas
+          {namespace: "custom", key: "tbl_tam"},
+          {namespace: "custom", key: "tbl-tam"}
         ]) {
           key
           value
@@ -636,15 +634,13 @@ export async function getProductByHandle(
     );
 
     if ('errors' in response) {
-      console.error('Erro ao buscar produto com shopifyFetch:', response.errors);
-      const { mockProducts } = createMockData(); 
+      const { mockProducts } = createMockData();
       return mockProducts.find((p) => p.handle === handle) || null;
     }
     
     return response.data?.productByHandle || null;
 
-  } catch (error) { 
-    console.error('Erro catastrófico ao buscar produto (fora do shopifyFetch):', error);
+  } catch (error) {
     const { mockProducts } = createMockData();
     return mockProducts.find((p) => p.handle === handle) || null;
   }
@@ -663,8 +659,15 @@ export async function getCollections(
             handle
             description
             image {
-              transformedSrc(maxWidth: 1000, maxHeight: 1000, preferredContentType: WEBP) # Assumindo um tamanho para imagens de coleção
+              transformedSrc(maxWidth: 1000, maxHeight: 1000, preferredContentType: WEBP)
               altText
+            }
+            products(first: 1) {
+              edges {
+                node {
+                  id
+                }
+              }
             }
           }
         }
@@ -680,15 +683,16 @@ export async function getCollections(
     );
 
     if ('errors' in response) {
-      console.error('Erro ao buscar coleções com shopifyFetch:', response.errors);
       const { mockCollections } = createMockData(); // Fallback
       return mockCollections;
     }
     
-    return response.data?.collections?.edges.map((edge) => edge.node) || [];
-  } catch (error) { // Este catch pode ser redundante
-    console.error('Erro catastrófico ao buscar coleções (fora do shopifyFetch):', error);
-    console.warn('Usando dados mockados para coleções devido a erro na API');
+    const allCollections = response.data?.collections?.edges.map((edge) => edge.node) || [];
+    // Only return collections that have at least one product
+    return allCollections.filter(
+      (col) => col.products && col.products.edges && col.products.edges.length > 0
+    );
+  } catch (error) {
     const { mockCollections } = createMockData();
     return mockCollections;
   }
@@ -831,7 +835,7 @@ export async function getProductsByCollection(
                 }
               }
             }
-            images(first: 1) {
+            images(first: 2) {
                 edges {
                   node {
                     transformedSrc(maxWidth: 500, maxHeight: 500, preferredContentType: WEBP)
@@ -853,22 +857,13 @@ export async function getProductsByCollection(
   `;
 
   try {
-    console.log("[ShopifyLib GetProductsByCollection] GQL Variables for handle " + collectionHandle + ":", JSON.stringify(variables, null, 2));
-    
     const response = await shopifyFetch<{ collectionByHandle: CollectionWithProductsPage | null }>(
       gqlQuery,
       variables,
       { next: cacheOptions } // Removido cache: 'no-store' de diagnóstico
     );
 
-    // Adicionar este bloco de log
-    if (gqlProductFilters.length > 0) {
-      console.log(`[ShopifyLib GetProductsByCollection] API Response for handle ${collectionHandle} WITH FILTERS (${gqlProductFilters.map(f => JSON.stringify(f)).join(', ')}):`, JSON.stringify(response, null, 2));
-    }
-    // Fim do bloco de log
-
     if ('errors' in response) {
-      console.error(`Erro ao buscar produtos da coleção ${collectionHandle} com shopifyFetch:`, response.errors);
       // Fallback para mock data em caso de erro
       const { mockProducts, mockCollections } = createMockData();
       const collectionMock = mockCollections.find((c) => c.handle === collectionHandle);
@@ -893,16 +888,10 @@ export async function getProductsByCollection(
     
     if (response.data && response.data.collectionByHandle) {
       return response.data.collectionByHandle;
-    } else if (response.data && !response.data.collectionByHandle) {
-      console.error(`Coleção não encontrada via shopifyFetch: ${collectionHandle}`);
-      return null;
     } else {
-      console.error(`Resposta inesperada da API (shopifyFetch) para a coleção ${collectionHandle}:`, response);
       return null;
     }
-  } catch (error) { // Este catch pode ser redundante
-    console.error(`Erro catastrófico ao buscar produtos da coleção ${collectionHandle} (fora do shopifyFetch):`, error);
-    console.warn(`Usando dados mockados para a coleção ${collectionHandle} devido a erro na API`);
+  } catch (error) {
     const { mockProducts, mockCollections } = createMockData();
     const collectionMock = mockCollections.find((c) => c.handle === collectionHandle);
     if (collectionMock) {
@@ -978,8 +967,16 @@ export async function searchProducts(
   const productArgsParts: string[] = [];
 
   let constructedQueryParts: string[] = [];
-  if (queryText) { // queryText é o termo principal da busca
-    constructedQueryParts.push(queryText); // Não precisa de parênteses se for o único termo textual
+  if (queryText) {
+    // Build a broad search: match across title, tag, product_type and vendor
+    const escaped = queryText.replace(/'/g, "\\'");
+    const broadSearch = [
+      `title:*${escaped}*`,
+      `tag:*${escaped}*`,
+      `product_type:*${escaped}*`,
+      `vendor:*${escaped}*`,
+    ].join(' OR ');
+    constructedQueryParts.push(`(${broadSearch})`);
   }
   if (priceFilterString) {
     constructedQueryParts.push(`(${priceFilterString})`);
@@ -988,11 +985,7 @@ export async function searchProducts(
     const tagQuery = tags.map(tag => `tag:'${tag.replace(/'/g, "\\'")}'`).join(' OR ');
     constructedQueryParts.push(`(${tagQuery})`);
   }
-  // if (productTypes && productTypes.length > 0) { // REMOVIDO
-  //   const typeQuery = productTypes.map(type => `product_type:'${type.replace(/'/g, "\\'")}'`).join(' OR ');
-  //   constructedQueryParts.push(`(${typeQuery})`);
-  // }
-  
+
   const finalQueryString = constructedQueryParts.join(' AND ');
 
   if (finalQueryString) {
@@ -1060,22 +1053,59 @@ export async function searchProducts(
             id
             title
             handle
-            # description REMOVIDO
+            productType
+            tags
             priceRange {
               minVariantPrice {
                 amount
                 currencyCode
               }
             }
-            # Adicionando busca por metafield de descrição curta
             metafield(namespace: "custom", key: "descri_curta") {
               value
             }
-            images(first: 1) {
+            options {
+              name
+              values
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  compareAtPrice {
+                    amount
+                    currencyCode
+                  }
+                  availableForSale
+                  quantityAvailable
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  metafield(namespace: "custom", key: "cor") {
+                    value
+                  }
+                }
+              }
+            }
+            images(first: 5) {
               edges {
                 node {
                   transformedSrc(maxWidth: 500, maxHeight: 500, preferredContentType: WEBP)
                   altText
+                }
+              }
+            }
+            collections(first: 3) {
+              edges {
+                node {
+                  title
+                  handle
                 }
               }
             }
@@ -1092,8 +1122,6 @@ export async function searchProducts(
   `;
 
   try {
-    console.log("[ShopifyLib SearchProducts] GQL Variables:", JSON.stringify(variables, null, 2));
-    
     const response = await shopifyFetch<{ products: ProductsConnection }>(
       gqlSearchQuery,
       variables,
@@ -1101,7 +1129,6 @@ export async function searchProducts(
     );
 
     if ('errors' in response) {
-      console.warn("[ShopifyLib SearchProducts] Errors from shopifyFetch:", response.errors);
       // Retornar uma estrutura vazia válida
       return {
         edges: [],
@@ -1112,15 +1139,13 @@ export async function searchProducts(
     if (response.data && response.data.products) {
       return response.data.products;
     } else {
-      console.warn("[ShopifyLib SearchProducts] No products data in response (shopifyFetch):", response);
       // Retornar uma estrutura vazia válida
       return {
         edges: [],
         pageInfo: { hasNextPage: false, hasPreviousPage: false }
       };
     }
-  } catch (error) { // Este catch pode ser redundante
-    console.error('Erro catastrófico ao buscar produtos (fora do shopifyFetch):', error);
+  } catch (error) {
     const { mockProducts } = createMockData();
     // Simulação de paginação para mock data
     const filtered = mockProducts.filter(
@@ -1183,12 +1208,182 @@ export interface ProductCreateInput {
 
 // As funções createProduct e createCollection foram movidas para shopify-admin.ts
 
+// Nova função para buscar coleção por ID
+export async function getCollectionById(
+  id: string,
+  cacheOptions: ShopifyFetchOptions['next'] = { revalidate: 3600, tags: [`collection:${id}`] }
+): Promise<Collection | null> {
+  const query = `
+    query GetCollectionById($id: ID!) {
+      collection(id: $id) {
+        id
+        title
+        handle
+        description
+        image {
+          transformedSrc(maxWidth: 600, maxHeight: 800, preferredContentType: WEBP)
+          altText
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await shopifyFetch<{ collection: Collection | null }>(
+      query,
+      { id },
+      { next: cacheOptions }
+    );
+
+    if ('errors' in response) {
+      return null;
+    }
+
+    return response.data?.collection || null;
+  } catch (error) {
+    return null;
+  }
+}
+
 // Nova função shopifyFetch (esboço inicial)
 export interface ShopifyFetchOptions extends RequestInit { // Adicionado export
   next?: {
     revalidate?: number | false;
     tags?: string[];
   };
+}
+
+// Busca produtos complementares ao look — NUNCA da mesma categoria/tipo.
+// Se o produto é uma calça, sugere camisetas, cintos, tênis etc.
+export async function getRelatedProducts(
+  productId: string,
+  excludeHandle: string,
+  options?: {
+    productType?: string;
+    collectionHandle?: string;
+    limit?: number;
+  }
+): Promise<Product[]> {
+  const limit = options?.limit || 8;
+  const excludeType = options?.productType?.toLowerCase().trim() || "";
+
+  // Helper: verifica se um produto é da mesma categoria/tipo que o atual
+  const isSameCategory = (p: Product): boolean => {
+    if (!excludeType) return false;
+    const pType = (p.productType || "").toLowerCase().trim();
+    if (!pType) return false;
+    // Match exato ou parcial (ex: "Camiseta" vs "Camisetas")
+    return pType === excludeType ||
+      pType.startsWith(excludeType) ||
+      excludeType.startsWith(pType);
+  };
+
+  // 1. Busca recomendações nativas do Shopify (filtrando mesma categoria)
+  const recommendationsQuery = `
+    query GetProductRecommendations($productId: ID!) {
+      productRecommendations(productId: $productId) {
+        id
+        title
+        handle
+        productType
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        variants(first: 10) {
+          edges {
+            node {
+              id
+              title
+              price {
+                amount
+                currencyCode
+              }
+              compareAtPrice {
+                amount
+                currencyCode
+              }
+              availableForSale
+              quantityAvailable
+              selectedOptions {
+                name
+                value
+              }
+              metafield(namespace: "custom", key: "cor") {
+                value
+              }
+            }
+          }
+        }
+        options {
+          name
+          values
+        }
+        images(first: 2) {
+          edges {
+            node {
+              transformedSrc(maxWidth: 500, maxHeight: 500, preferredContentType: WEBP)
+              altText
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  let allProducts: Product[] = [];
+
+  try {
+    const recResponse = await shopifyFetch<{ productRecommendations: Product[] }>(
+      recommendationsQuery,
+      { productId },
+      { next: { revalidate: 3600, tags: ['recommendations'] } }
+    );
+
+    if (!('errors' in recResponse) && recResponse.data?.productRecommendations) {
+      allProducts = recResponse.data.productRecommendations.filter(
+        (p) => p.handle !== excludeHandle && !isSameCategory(p)
+      );
+    }
+  } catch {
+    // Recomendações falharam, seguimos com fallback
+  }
+
+  // 2. Se não tiver suficiente, busca produtos gerais excluindo o tipo atual
+  if (allProducts.length < limit) {
+    try {
+      // Busca produtos variados, excluindo explicitamente o tipo atual
+      const excludeQuery = excludeType
+        ? `NOT product_type:'${excludeType.replace(/'/g, "\\'")}'`
+        : undefined;
+
+      const generalProducts = await getProducts({
+        first: limit * 2,
+        query: excludeQuery,
+        sortKey: "BEST_SELLING",
+        reverse: false,
+      });
+
+      if (generalProducts?.edges) {
+        const complementItems = generalProducts.edges
+          .map((e) => e.node)
+          .filter(
+            (p) =>
+              p.handle !== excludeHandle &&
+              !isSameCategory(p) &&
+              !allProducts.find((existing) => existing.id === p.id)
+          );
+        allProducts = [...allProducts, ...complementItems];
+      }
+    } catch {
+      // Fallback geral falhou
+    }
+  }
+
+  // Limita ao número solicitado
+  return allProducts.slice(0, limit);
 }
 
 export async function shopifyFetch<T>(
@@ -1218,15 +1413,13 @@ export async function shopifyFetch<T>(
     const body = await result.json();
 
     if (body.errors) {
-      console.error('Shopify Fetch Errors:', body.errors);
       return { errors: body.errors };
     }
 
     return { data: body.data as T };
 
   } catch (e) {
-    console.error('Erro durante o shopifyFetch:', e);
-    // Em um cenário real, você pode querer lançar o erro ou retornar um formato de erro consistente
+    // Return a consistent error format
     return { errors: [{ message: (e as Error).message }] };
   }
 }
