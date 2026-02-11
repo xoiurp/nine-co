@@ -36,14 +36,34 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-const VISIBLE_ITEMS = 3;
+function getVisibleItems(width: number): number {
+  if (width >= 1024) return 3; // lg
+  if (width >= 640) return 2;  // sm
+  return 1;                     // mobile
+}
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [visibleItems, setVisibleItems] = useState(3);
+
+  // Responsive visible items
+  useEffect(() => {
+    const updateVisibleItems = () => {
+      setVisibleItems(getVisibleItems(window.innerWidth));
+    };
+    updateVisibleItems();
+    window.addEventListener("resize", updateVisibleItems);
+    return () => window.removeEventListener("resize", updateVisibleItems);
+  }, []);
 
   const totalSlides = TESTIMONIALS.length;
-  const maxIndex = Math.max(0, totalSlides - VISIBLE_ITEMS);
+  const maxIndex = Math.max(0, totalSlides - visibleItems);
+
+  // Reset index when visible items change
+  useEffect(() => {
+    setCurrentIndex((prev) => Math.min(prev, maxIndex));
+  }, [maxIndex]);
 
   const nextSlide = useCallback(() => {
     if (isAnimating) return;
@@ -78,7 +98,7 @@ const Testimonials = () => {
           {/* Navigation Arrows */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-8 z-10 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 sm:-translate-x-8 z-10 w-11 h-11 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
             aria-label="Previous"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,7 +108,7 @@ const Testimonials = () => {
 
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-8 z-10 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 sm:translate-x-8 z-10 w-11 h-11 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
             aria-label="Next"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +120,7 @@ const Testimonials = () => {
           <div className="overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(-${currentIndex * (100 / VISIBLE_ITEMS)}%)` }}
+              style={{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }}
             >
               {TESTIMONIALS.map((testimonial) => (
                 <div

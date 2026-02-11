@@ -133,7 +133,7 @@ const NewProductGallery: React.FC<NewProductGalleryProps> = ({ images }) => {
           {/* Close button */}
           <button
             onClick={() => setLightboxOpen(false)}
-            className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center bg-white border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors"
+            className="absolute top-4 right-4 z-10 w-11 h-11 flex items-center justify-center bg-white border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

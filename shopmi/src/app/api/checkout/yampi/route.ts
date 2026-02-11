@@ -5,6 +5,8 @@ const SHOPIFY_STORE_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN as str
 const STOREFRONT_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN_CLIENT as string;
 
 const DOOKI_ENDPOINT = process.env.DOOKI_PUBLIC_ENDPOINT || 'https://api.dooki.com.br/v2/public/shopify/cart';
+const YAMPI_TOKEN = process.env.YAMPI_TOKEN || '';
+const YAMPI_SECRET_KEY = process.env.YAMPI_SECRET_KEY || '';
 
 // Minimal selection set to build the Yampi payload
 const CART_SELECTION = `
@@ -159,9 +161,17 @@ export async function POST(req: NextRequest) {
     console.log('[Yampi Checkout] Sending payload to Dooki:', JSON.stringify(payload, null, 2));
 
     // Call Dooki public endpoint to create Yampi checkout
+    const dookiHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (YAMPI_TOKEN) {
+      dookiHeaders['User-Token'] = YAMPI_TOKEN;
+    }
+    if (YAMPI_SECRET_KEY) {
+      dookiHeaders['User-Secret-Key'] = YAMPI_SECRET_KEY;
+    }
+
     const dookiRes = await fetch(DOOKI_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: dookiHeaders,
       body: JSON.stringify(payload),
     });
 

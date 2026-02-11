@@ -33,7 +33,7 @@ const JustArrivedGrid: React.FC<JustArrivedGridProps> = ({ products }) => {
             {/* Navigation Arrows */}
             <div className="hidden sm:flex items-center gap-2">
               <button
-                className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
+                className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-900 transition-colors"
                 aria-label="Previous"
               >
                 <svg
@@ -51,7 +51,7 @@ const JustArrivedGrid: React.FC<JustArrivedGridProps> = ({ products }) => {
                 </svg>
               </button>
               <button
-                className="w-8 h-8 flex items-center justify-center text-gray-900 hover:text-gray-600 transition-colors"
+                className="w-10 h-10 flex items-center justify-center text-gray-900 hover:text-gray-600 transition-colors"
                 aria-label="Next"
               >
                 <svg

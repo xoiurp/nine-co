@@ -17,6 +17,7 @@ import {
   AlertCircle,
   Loader2
 } from 'lucide-react';
+import logoIcon from '@/assets/images/logo-pico.svg';
 
 // Tipos
 interface CustomerData {
@@ -230,7 +231,7 @@ export default function CheckoutPage() {
             <span className="hidden sm:inline text-sm">Voltar</span>
           </Link>
           <Link href="/">
-            <Image src="/assets/images/novo-logo.svg" alt="PICO" width={120} height={40} className="h-8 w-auto" />
+            <Image src={logoIcon} alt="PICO" width={120} height={40} className="h-8 w-auto" />
           </Link>
           <div className="flex items-center gap-2 text-[#1a1a1a]">
             <Lock className="w-4 h-4" />

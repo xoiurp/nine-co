@@ -65,3 +65,6 @@ YAMPI_CHECKOUT_SETUP.md
 SHOPIFY_WEBHOOKS_SETUP.md
 SHOPIFY_FLOW_SETUP.md
 workers/SETUP_GUIDE.md
+
+# Windows reserved filenames
+nul

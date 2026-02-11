@@ -11,11 +11,12 @@ import { SheetClose } from '../ui/sheet';
 const CartDrawerContent: React.FC = () => {
   const router = useRouter();
   const { cart, totalItems, totalPrice, updateQuantity, removeFromCart, setCartSheetOpen } = useCart();
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
 
   // Free shipping threshold
-  const FREE_SHIPPING_THRESHOLD = 450;
+  const FREE_SHIPPING_THRESHOLD = 500;
   const amountForFreeShipping = Math.max(0, FREE_SHIPPING_THRESHOLD - totalPrice);
+  const freeShippingProgress = Math.min(100, (totalPrice / FREE_SHIPPING_THRESHOLD) * 100);
 
   // Format price
   const formatPrice = (price: number | string, currencyCode: string = 'BRL') => {
@@ -50,16 +51,29 @@ const CartDrawerContent: React.FC = () => {
       </div>
 
       {/* Free shipping message */}
-      {amountForFreeShipping > 0 && cart.length > 0 && (
+      {cart.length > 0 && (
         <div className="px-6 py-3 border-b border-[#e0e0e0]">
-          <p className="text-sm text-[#666]">
-            <span className="inline-flex items-center gap-1 mr-1">
+          {amountForFreeShipping > 0 ? (
+            <>
+              <p className="text-xs text-[#666] mb-2">
+                Falta <span className="font-medium text-[#1a1a1a]">{formatPrice(amountForFreeShipping)}</span> para{" "}
+                <span className="font-medium text-[#1a1a1a]">frete grátis</span>
+              </p>
+              <div className="w-full h-1.5 bg-[#e0e0e0] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-[#1a1a1a] rounded-full transition-all duration-500"
+                  style={{ width: `${freeShippingProgress}%` }}
+                />
+              </div>
+            </>
+          ) : (
+            <p className="text-xs text-[#1a1a1a] font-medium flex items-center gap-1.5">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-            </span>
-            Gaste {formatPrice(amountForFreeShipping)} mais para frete grátis
-          </p>
+              Parabéns! Você ganhou frete grátis
+            </p>
+          )}
         </div>
       )}
 

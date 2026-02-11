@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 
-// Intercepts generic checkout buttons in the DOM and redirects to internal checkout
+// Intercepts generic checkout buttons in the DOM and redirects to Yampi checkout
 export default function GlobalCheckoutInterceptor() {
   const { cart } = useCart();
-  const router = useRouter();
 
   useEffect(() => {
     const selectors = [
@@ -23,8 +21,7 @@ export default function GlobalCheckoutInterceptor() {
       'button, a'
     ];
 
-    const onClick = (evt: Event) => {
-      // Only act if the element resembles a checkout intent
+    const onClick = async (evt: Event) => {
       const target = evt.currentTarget as HTMLElement | null;
       const text = (target?.textContent || '').toLowerCase();
       const value = (target as HTMLInputElement)?.value?.toLowerCase?.() || '';
@@ -45,15 +42,44 @@ export default function GlobalCheckoutInterceptor() {
       evt.preventDefault();
       evt.stopPropagation();
 
-      // Redirecionar para checkout interno
-      console.log('[Checkout Interceptor] Redirecionando para checkout interno: /checkout');
-      router.push('/checkout');
+      // Call Yampi checkout API
+      try {
+        const items = cart.map((item) => ({
+          variantId: item.variantId,
+          quantity: item.quantity,
+        }));
+
+        const res = await fetch('/api/checkout/yampi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items }),
+        });
+
+        const data = await res.json();
+        console.log('[Checkout Interceptor] Dooki response:', data);
+
+        const redirectUrl =
+          data.checkout_direct_url ||
+          data.checkout_url ||
+          data.redirect_url ||
+          data.url ||
+          data.data?.checkout_direct_url ||
+          data.data?.checkout_url ||
+          data.data?.url;
+
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          console.error('[Checkout Interceptor] No redirect URL in response:', data);
+        }
+      } catch (error) {
+        console.error('[Checkout Interceptor] Erro na requisição de checkout:', error);
+      }
     };
 
     const attach = () => {
       const nodes = document.querySelectorAll(selectors.join(', '));
       nodes.forEach((node) => {
-        // Avoid attaching multiple times
         const anyNode = node as any;
         if (anyNode.__checkoutAttached) return;
         node.addEventListener('click', onClick, { capture: true });
@@ -70,7 +96,7 @@ export default function GlobalCheckoutInterceptor() {
         node.removeEventListener('click', onClick, { capture: true } as any);
       });
     };
-  }, [cart, router]);
+  }, [cart]);
 
   return null;
 }

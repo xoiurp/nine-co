@@ -34,7 +34,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
         <div className="max-w-[1400px] mx-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-lg font-semibold text-[#1a1a1a] uppercase tracking-wider">
+            <h2 className="text-lg sm:text-xl font-semibold text-[#1a1a1a] uppercase tracking-wider">
               {title}
             </h2>
 
@@ -43,13 +43,13 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({
               <div className="hidden md:flex items-center gap-2">
                 <button
                   onClick={() => scroll("left")}
-                  className="w-10 h-10 flex items-center justify-center border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors text-[#1a1a1a]"
+                  className="w-11 h-11 flex items-center justify-center border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors text-[#1a1a1a]"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => scroll("right")}
-                  className="w-10 h-10 flex items-center justify-center border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors text-[#1a1a1a]"
+                  className="w-11 h-11 flex items-center justify-center border border-[#e0e0e0] hover:bg-[#1a1a1a] hover:text-white hover:border-[#1a1a1a] transition-colors text-[#1a1a1a]"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>

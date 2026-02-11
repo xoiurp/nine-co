@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import ShippingCalculator from "@/components/shipping/ShippingCalculator";
 
 interface ColorOption {
   name: string;
@@ -154,6 +155,26 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
       product.priceRange.minVariantPrice.currencyCode
     );
   }, [selectedVariant, product]);
+
+  // Get current numeric price for installment calculation
+  const currentNumericPrice = useMemo(() => {
+    if (selectedVariant) {
+      return parseFloat(selectedVariant.price.amount);
+    }
+    return parseFloat(product.priceRange.minVariantPrice.amount);
+  }, [selectedVariant, product]);
+
+  // PIX discount price (5% off, consistent with checkout)
+  const pixPrice = useMemo(() => {
+    return currentNumericPrice * 0.95;
+  }, [currentNumericPrice]);
+
+  // Installment calculation (up to 6x, no interest)
+  const installment = useMemo(() => {
+    const maxInstallments = 6;
+    const installmentValue = currentNumericPrice / maxInstallments;
+    return { count: maxInstallments, value: installmentValue };
+  }, [currentNumericPrice]);
 
   // Get compare at price
   const compareAtPrice = useMemo(() => {
@@ -310,7 +331,7 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
     <div className="flex flex-col h-full lg:py-8">
       {/* Stock Badge */}
       {isLowStock && (
-        <Badge className="w-fit mb-4 bg-[#1a1a1a] hover:bg-[#1a1a1a] text-white text-[10px] tracking-wider uppercase font-semibold px-3 py-1.5 rounded-sm">
+        <Badge className="w-fit mb-4 bg-[#1a1a1a] hover:bg-[#1a1a1a] text-white text-[10px] sm:text-xs tracking-wider uppercase font-semibold px-3 py-1.5 rounded-sm">
           ÚLTIMAS UNIDADES
         </Badge>
       )}
@@ -326,7 +347,20 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
         {compareAtPrice && (
           <span className="text-[#999] line-through text-base">{compareAtPrice}</span>
         )}
-        <span className="text-[10px] text-[#666] uppercase tracking-wider ml-1">Impostos inclusos</span>
+        <span className="text-[10px] sm:text-xs text-[#666] uppercase tracking-wider ml-1">Impostos inclusos</span>
+      </div>
+
+      {/* Installment Info */}
+      <div className="border border-[#e0e0e0] p-4 mb-6">
+        <p className="text-sm text-[#1a1a1a] font-medium">
+          {formatPrice(pixPrice)}
+          <span className="text-xs text-[#666] font-normal ml-1">com 5% de desconto no PIX</span>
+        </p>
+        <p className="text-sm text-[#666] mt-1">
+          Ou {currentPrice} em até {installment.count}x de{" "}
+          <span className="font-medium text-[#1a1a1a]">{formatPrice(installment.value)}</span>{" "}
+          sem juros
+        </p>
       </div>
 
       {/* Description */}
@@ -337,7 +371,7 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
         {hasLongDescription && (
           <button
             onClick={() => setShowFullDescription(!showFullDescription)}
-            className="text-[11px] text-[#1a1a1a] uppercase tracking-wider mt-3 hover:underline underline-offset-4 font-medium"
+            className="text-[11px] sm:text-xs text-[#1a1a1a] uppercase tracking-wider mt-3 hover:underline underline-offset-4 font-medium"
           >
             {showFullDescription ? "Ver menos -" : "Ler mais +"}
           </button>
@@ -349,11 +383,11 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
         <div className="mb-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider text-[#666] font-medium">
+              <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#666] font-medium">
                 Tamanho
               </span>
               {selectedSize && (
-                <span className="text-[10px] uppercase tracking-wider text-[#1a1a1a] font-semibold">
+                <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#1a1a1a] font-semibold">
                   {selectedSize}
                 </span>
               )}
@@ -361,7 +395,7 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
             {sizeChartData && (
               <button
                 onClick={() => setSizeChartOpen(true)}
-                className="text-[10px] uppercase tracking-wider text-[#1a1a1a] underline underline-offset-4 hover:text-[#666] font-medium flex items-center gap-1.5"
+                className="text-[10px] sm:text-xs uppercase tracking-wider text-[#1a1a1a] underline underline-offset-4 hover:text-[#666] font-medium flex items-center gap-1.5"
               >
                 <Ruler className="w-3 h-3" />
                 Guia de tamanhos
@@ -376,7 +410,7 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
                   key={size}
                   onClick={() => isAvailable && setSelectedSize(size)}
                   disabled={!isAvailable}
-                  className={`min-w-[40px] h-10 px-2 text-[11px] font-medium border-2 transition-all ${
+                  className={`min-w-[40px] h-10 px-2 text-[11px] sm:text-xs font-medium border-2 transition-all ${
                     selectedSize === size
                       ? "border-[#1a1a1a] bg-white text-[#1a1a1a]"
                       : "border-[#e0e0e0] text-[#666] hover:border-[#999]"
@@ -394,10 +428,10 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
       {uniqueColors.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[10px] uppercase tracking-wider text-[#666] font-medium">
+            <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#666] font-medium">
               Cor
             </span>
-            <span className="text-[10px] uppercase tracking-wider text-[#1a1a1a] font-semibold">
+            <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#1a1a1a] font-semibold">
               {selectedColor}
             </span>
           </div>
@@ -501,6 +535,11 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
         Comprar agora
       </Button>
 
+      {/* Shipping Calculator */}
+      <div className="mb-6">
+        <ShippingCalculator />
+      </div>
+
       {/* Stock Alert */}
       {stockQuantity <= 0 && selectedVariant && (
         <div className="flex items-center gap-2 text-red-600 text-sm mb-4">
@@ -532,7 +571,7 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
           </div>
           <Link
             href="#store-info"
-            className="text-[11px] uppercase tracking-wider text-[#1a1a1a] underline underline-offset-4 hover:text-[#666] font-medium whitespace-nowrap"
+            className="text-[11px] sm:text-xs uppercase tracking-wider text-[#1a1a1a] underline underline-offset-4 hover:text-[#666] font-medium whitespace-nowrap"
           >
             Ver informações da loja
           </Link>
@@ -541,27 +580,27 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
 
       {/* Benefits Cards - 2x2 Grid Compact */}
       <div className="grid grid-cols-2 gap-2">
-        <div className="flex flex-col items-center justify-center p-3 border border-[#e0e0e0]">
+        <div className="flex flex-col items-center justify-center p-2.5 sm:p-3 border border-[#e0e0e0]">
           <Truck className="w-4 h-4 text-[#1a1a1a] mb-1.5" />
-          <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
             Envio rápido
           </span>
         </div>
-        <div className="flex flex-col items-center justify-center p-3 border border-[#e0e0e0]">
+        <div className="flex flex-col items-center justify-center p-2.5 sm:p-3 border border-[#e0e0e0]">
           <RefreshCw className="w-4 h-4 text-[#1a1a1a] mb-1.5" />
-          <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
             Trocas grátis
           </span>
         </div>
-        <div className="flex flex-col items-center justify-center p-3 border border-[#e0e0e0]">
+        <div className="flex flex-col items-center justify-center p-2.5 sm:p-3 border border-[#e0e0e0]">
           <ShieldCheck className="w-4 h-4 text-[#1a1a1a] mb-1.5" />
-          <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
             Pagamento seguro
           </span>
         </div>
-        <div className="flex flex-col items-center justify-center p-3 border border-[#e0e0e0]">
+        <div className="flex flex-col items-center justify-center p-2.5 sm:p-3 border border-[#e0e0e0]">
           <Truck className="w-4 h-4 text-[#1a1a1a] mb-1.5" />
-          <span className="text-[9px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
+          <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-[#1a1a1a] font-medium text-center leading-tight">
             Frete grátis
           </span>
         </div>

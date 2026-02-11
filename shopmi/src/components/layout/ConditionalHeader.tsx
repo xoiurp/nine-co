@@ -6,8 +6,8 @@ import NewHeader from "./NewHeader";
 export default function ConditionalHeader() {
   const pathname = usePathname();
 
-  // Não mostrar header em páginas admin
-  if (pathname.startsWith("/admin")) {
+  // Não mostrar header em páginas admin ou checkout (checkout tem header próprio)
+  if (pathname.startsWith("/admin") || pathname.startsWith("/checkout")) {
     return null;
   }
 

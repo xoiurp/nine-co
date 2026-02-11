@@ -245,7 +245,7 @@ const ShopProductCard: React.FC<ShopProductCardProps> = ({
           <button
             onClick={handleOpenOptions}
             disabled={!availableForSale}
-            className={`absolute bottom-3 right-3 z-10 w-10 h-10 rounded-lg bg-[#1a1a1a] flex items-center justify-center transition-all duration-300 ${
+            className={`absolute bottom-3 right-3 z-10 w-11 h-11 rounded-lg bg-[#1a1a1a] flex items-center justify-center transition-all duration-300 ${
               isHovered && availableForSale
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-2 pointer-events-none"
@@ -289,7 +289,7 @@ const ShopProductCard: React.FC<ShopProductCardProps> = ({
                       e.stopPropagation();
                       setSelectedColor(selectedColor === color ? null : color);
                     }}
-                    className={`w-4 h-4 rounded-full border transition-all duration-200 ${
+                    className={`w-5 h-5 rounded-full border transition-all duration-200 ${
                       isWhite ? "border-gray-300" : "border-transparent"
                     } ${
                       selectedColor === color

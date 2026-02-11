@@ -17,7 +17,7 @@ const images = [
 
 const BannerSlider = () => {
   return (
-    <div className="w-full aspect-[2.2] relative mb-12 group">
+    <div className="w-full aspect-[4/3] sm:aspect-[2.2] relative mb-8 sm:mb-12 group">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -34,6 +34,7 @@ const BannerSlider = () => {
                 alt={`Banner ${index + 1}`}
                 fill={true}
                 className="object-cover"
+                sizes="100vw"
               />
             </div>
           </SwiperSlide>

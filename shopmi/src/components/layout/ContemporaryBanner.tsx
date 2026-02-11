@@ -12,9 +12,9 @@ interface ContemporaryBannerProps {
 const ContemporaryBanner: React.FC<ContemporaryBannerProps> = ({ collection }) => {
   return (
     <section className="w-full bg-black">
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px] lg:min-h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[450px] sm:min-h-[500px] lg:min-h-[600px]">
         {/* Left - Image */}
-        <div className="relative h-[400px] lg:h-full overflow-hidden">
+        <div className="relative h-[300px] sm:h-[400px] lg:h-full overflow-hidden">
           {collection?.image ? (
             <Image
               src={collection.image.transformedSrc || collection.image.originalSrc || ""}
@@ -31,7 +31,7 @@ const ContemporaryBanner: React.FC<ContemporaryBannerProps> = ({ collection }) =
         </div>
 
         {/* Right - Content */}
-        <div className="flex flex-col items-center justify-center px-8 py-16 lg:px-16 lg:py-20 text-center">
+        <div className="flex flex-col items-center justify-center px-6 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 text-center">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight mb-4">
             Clássico encontra o contemporâneo
           </h2>
