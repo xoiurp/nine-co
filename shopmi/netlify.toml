@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm ci && npm run build"
   publish = ".next"
   # Configuração do scanner de segredos
   secrets_scan_enabled = true
@@ -25,8 +25,8 @@
   ]
   
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_VERSION = "9"
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
   # Configurações específicas do Netlify
   NETLIFY = "true"
   # Configurar senhas para seed (serão geradas automaticamente se não definidas)
