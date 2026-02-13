@@ -9,6 +9,7 @@ async function resetAdminPassword() {
     const admin = await prisma.user.findFirst({
       where: { 
         OR: [
+          { email: 'admin@nineco.com.br' },
           { email: 'admin@mibrasil.com' },
           { email: 'admin@shopmi.com' }
         ]

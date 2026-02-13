@@ -190,7 +190,12 @@ export async function POST(request: Request) {
       }, { status: 500 });
     }
 
-    const validOptions = shippingOptions.filter((option: any) => !option.error);
+    const validOptions = shippingOptions.filter((option: any) => {
+      if (option.error) return false;
+      // Mostrar apenas PAC e SEDEX
+      const name = (option.name || '').toUpperCase();
+      return name === 'PAC' || name === 'SEDEX';
+    });
 
     return NextResponse.json(validOptions);
 

@@ -8,7 +8,7 @@ import NewFooter from "../components/layout/NewFooter";
 import GlobalCheckoutInterceptor from "@/components/checkout/GlobalCheckoutInterceptor";
 
 
-// Configuração da fonte local MiSans (substituir pelos arquivos de fonte da PICO quando disponível)
+// Configuração da fonte local MiSans (substituir pelos arquivos de fonte da Ninē & CO quando disponível)
 const miSans = localFont({
   src: [
     { path: '../assets/fonts/MiSans-Thin.woff2', weight: '100', style: 'normal' },
@@ -25,8 +25,8 @@ const miSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "PICO",
-  description: "PICO - Sua loja online com os melhores produtos.",
+  title: "Ninē & CO",
+  description: "Ninē & CO - Sua loja online com os melhores produtos.",
   icons: {
     icon: "/favicon.svg",
   },

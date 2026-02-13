@@ -462,7 +462,7 @@ const Header = () => {
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
                 src={logoIcon}
-                alt="PICO Logo"
+                alt="Ninē & CO"
                 width={120}
                 height={40}
                 className="h-8 sm:h-10 md:h-10 w-auto object-contain"
@@ -673,13 +673,13 @@ const Header = () => {
                         <Link href="/" className="flex items-center">
                           <Image
                             src={logoIcon}
-                            alt="PICO Logo"
+                            alt="Ninē & CO"
                             width={120}
                             height={40}
                             className="h-8 w-auto object-contain"
                             priority
                           />
-                           <span className="ml-2 text-section font-semibold">PICO</span>
+                           <span className="ml-2 text-section font-semibold">Ninē & CO</span>
                         </Link>
                       </SheetTitle>
                       {/* O SheetContent já fornece um botão de fechar padrão, então o SheetClose explícito foi removido daqui */}

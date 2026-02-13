@@ -1,4 +1,4 @@
-# Plano de Autenticação de Clientes - Mi Brasil
+# Plano de Autenticação de Clientes - Ninê & Co
 
 ## 📋 Histórico de Tentativas
 
@@ -31,7 +31,7 @@ and Plus plans.
 1. **Webhook `customers/create` funciona MAS dados chegam incompletos:**
    - ✅ `shopifyId`, `addresses`, `default_address` salvam
    - ❌ `email`, `firstName`, `lastName`, `phone` chegam como NULL
-   - Causa: Customer Account API (`account.mibrasil.com`) não envia dados completos no webhook
+   - Causa: Customer Account API (`account.nineco.com`) não envia dados completos no webhook
 
 2. **Webhook não dispara de forma confiável:**
    - Funciona via ngrok (desenvolvimento) ✅
@@ -48,7 +48,7 @@ and Plus plans.
 
 ---
 
-### ❌ Tentativa 3: Usar account.mibrasil.com (Customer Account API)
+### ❌ Tentativa 3: Usar account.nineco.com (Customer Account API)
 **Objetivo:** Usar sistema passwordless da Shopify
 **Status:** Descartado
 

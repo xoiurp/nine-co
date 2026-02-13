@@ -65,7 +65,7 @@ interface NewHeaderProps {
   invertColors?: boolean;
 }
 
-const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
+const NewHeader = ({ invertColors = true }: NewHeaderProps) => {
   const router = useRouter();
   const { totalItems, isCartSheetOpen, setCartSheetOpen } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -140,40 +140,16 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, [searchOpen, closeSearch]);
 
-  // Helper: text color for nav elements on the main navigation bar
-  // invertColors = light page background, so text should ALWAYS be dark
-  // Without invertColors = dark hero background, so text is white until scrolled
-  const navTextColor = invertColors
-    ? "text-gray-900"
-    : isScrolled
-      ? "text-gray-900"
-      : "text-white";
-
-  // Helper: hover/focus overrides for NavigationMenuTrigger
-  // The base navigationMenuTriggerStyle has hardcoded hover:text-white and focus:text-white
-  // On light backgrounds, we need to override these to keep text dark on hover/focus
-  const navTriggerHoverOverride = invertColors || isScrolled
-    ? "hover:text-gray-900 focus:text-gray-900 hover:bg-gray-100/50"
-    : "hover:text-white focus:text-white hover:bg-white/10";
-
-  // Helper: text color for top bar (inherits from parent container's text color)
-  const topBarTextColor = isScrolled
-    ? "text-gray-900"
-    : invertColors
-      ? "text-gray-900"
-      : "text-white";
+  // Header sempre branco com texto escuro - tema infantil
+  const navTextColor = "text-gray-900";
+  const navTriggerHoverOverride = "hover:text-gray-900 focus:text-gray-900 hover:bg-gray-100/50";
+  const topBarTextColor = "text-gray-900";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Top Bar - Always visible */}
       <div
-        className={`transition-all duration-300 ${
-          isScrolled
-            ? "bg-white text-gray-900 border-b border-gray-200"
-            : invertColors
-              ? "bg-white/80 text-gray-900 backdrop-blur-sm border-b border-gray-100"
-              : "bg-black/30 text-white backdrop-blur-sm"
-        }`}
+        className="transition-all duration-300 bg-[#FFB6C1] text-gray-900 border-b border-[#F8A4B0]"
       >
         <div className="container mx-auto px-4 py-2">
           <div className="flex items-center justify-between text-[10px] sm:text-xs tracking-widest uppercase font-medium">
@@ -209,10 +185,10 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span>Bem-vindo à nossa loja</span>
+                <span>Bem-vindo(a) à Ninē & CO</span>
               </div>
               <span className="hidden sm:inline text-current opacity-40">|</span>
-              <span className="hidden sm:inline">Frete grátis acima de R$ 500</span>
+              <span className="hidden sm:inline">Frete grátis acima de R$ 299</span>
             </div>
 
             {/* Right - New Products + Countdown */}
@@ -241,13 +217,7 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
 
       {/* Main Navigation */}
       <div
-        className={`transition-all duration-500 ${
-          isScrolled
-            ? "bg-white shadow-md"
-            : invertColors
-              ? "bg-white"
-              : "bg-transparent"
-        }`}
+        className={`transition-all duration-500 bg-white ${isScrolled ? "shadow-md" : ""}`}
       >
         <div className="container mx-auto px-4 overflow-visible">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16 sm:h-20 overflow-visible">
@@ -282,10 +252,10 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
                         <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
                           <Image
                             src={logoIcon}
-                            alt="Logo"
-                            width={120}
-                            height={40}
-                            className="h-8 w-auto object-contain"
+                            alt="Ninē & CO"
+                            width={150}
+                            height={50}
+                            className="h-10 w-auto object-contain"
                             priority
                           />
                         </Link>
@@ -524,16 +494,10 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
             <Link href="/" className="flex justify-center px-2 flex-shrink-0">
               <Image
                 src={logoIcon}
-                alt="Logo"
+                alt="Ninē & CO"
                 width={140}
                 height={50}
-                className={`h-7 sm:h-8 lg:h-9 xl:h-10 w-auto max-w-[80px] sm:max-w-[100px] lg:max-w-[120px] xl:max-w-[140px] object-contain transition-all duration-300 ${
-                  invertColors
-                    ? "brightness-100"
-                    : isScrolled
-                      ? "brightness-100"
-                      : "brightness-0 invert"
-                }`}
+                className="h-10 sm:h-11 lg:h-12 xl:h-14 w-auto max-w-[110px] sm:max-w-[130px] lg:max-w-[160px] xl:max-w-[180px] object-contain transition-all duration-300"
                 priority
               />
             </Link>
@@ -612,7 +576,7 @@ const NewHeader = ({ invertColors = false }: NewHeaderProps) => {
                       />
                     </svg>
                     {totalItems > 0 && (
-                      <span className="absolute -top-1.5 -right-1.5 bg-[#1a1a1a] text-white text-[9px] font-bold rounded-full h-4 w-4 min-w-[16px] flex items-center justify-center">
+                      <span className="absolute -top-1.5 -right-1.5 bg-[#E8839B] text-white text-[9px] font-bold rounded-full h-4 w-4 min-w-[16px] flex items-center justify-center">
                         {totalItems > 9 ? '9+' : totalItems}
                       </span>
                     )}

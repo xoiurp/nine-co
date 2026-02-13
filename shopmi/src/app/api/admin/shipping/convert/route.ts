@@ -6,7 +6,7 @@ function convertAddress(address: any, isFrom: boolean = false) {
   // Para remetente, usar dados da empresa a partir das variáveis de ambiente
   if (isFrom) {
     const fromAddress: any = {
-      name: process.env.MELHOR_ENVIO_FROM_NAME || 'PICO',
+      name: process.env.MELHOR_ENVIO_FROM_NAME || 'Ninē & CO',
       phone: process.env.MELHOR_ENVIO_FROM_PHONE || '11999999999',
       email: process.env.MELHOR_ENVIO_FROM_EMAIL || 'contato@nineco.com.br',
       address: process.env.MELHOR_ENVIO_FROM_ADDRESS || 'Rua Exemplo, 123',
@@ -16,7 +16,7 @@ function convertAddress(address: any, isFrom: boolean = false) {
       city: process.env.MELHOR_ENVIO_FROM_CITY || 'São Paulo',
       country_id: 'BR',
       postal_code: (process.env.MELHOR_ENVIO_FROM_POSTAL_CODE || '13802170').replace(/\D/g, ''),
-      note: 'Loja PICO'
+      note: 'Loja Ninē & CO'
     };
 
     // Adicionar documento da empresa (CNPJ) ou pessoal (CPF) - NUNCA ambos.
@@ -212,7 +212,7 @@ export async function GET() {
     const defaultConfig = {
       defaultService: 1, // PAC
       defaultFromAddress: {
-        name: 'PICO',
+        name: 'Ninē & CO',
         phone: '11999999999',
         email: 'contato@nineco.com.br',
         document: '12345678901',

@@ -78,52 +78,69 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [sizeChartOpen, setSizeChartOpen] = useState(false);
 
-  // Get available sizes from variants
+  // Detect if product has color and size options
+  const hasColorOption = uniqueColors.length > 0;
+
+  // Get available sizes from variants - also check "title" as fallback for single-option products
   const availableSizes = useMemo(() => {
     const sizes = new Set<string>();
     variants.forEach((variant) => {
       if (!variant.selectedOptions) return;
       const sizeOption = variant.selectedOptions.find(
-        (opt) => opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size"
+        (opt) => {
+          const name = opt.name.toLowerCase();
+          return name === "tamanho" || name === "size" || name === "title";
+        }
       );
-      if (sizeOption) {
+      if (sizeOption && sizeOption.value !== "Default Title") {
         sizes.add(sizeOption.value);
       }
     });
     return Array.from(sizes);
   }, [variants]);
 
-  // Find selected variant based on color and size
+  // Find selected variant based on color and/or size
   const selectedVariant = useMemo(() => {
-    if (!selectedColor) return null;
-    
-    // Se o produto tem tamanhos mas nenhum está selecionado, não pode adicionar
+    // If product has sizes and none is selected, can't determine variant
     const hasSizes = availableSizes.length > 0;
     if (hasSizes && !selectedSize) return null;
-    
+
+    // If product has colors and none is selected, can't determine variant
+    if (hasColorOption && !selectedColor) return null;
+
+    // If only 1 variant and no options to select, auto-select it
+    if (variants.length === 1 && !hasSizes && !hasColorOption) {
+      return variants[0];
+    }
+
     return variants.find((variant) => {
       if (!variant.selectedOptions) return false;
-      
-      const colorMatch = variant.selectedOptions.find(
-        (opt) =>
-          (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
-          opt.value === selectedColor
-      );
-      
-      if (!colorMatch) return false;
-      
+
+      // Check color match if product has colors
+      if (hasColorOption) {
+        const colorMatch = variant.selectedOptions.find(
+          (opt) =>
+            (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
+            opt.value === selectedColor
+        );
+        if (!colorMatch) return false;
+      }
+
+      // Check size match if product has sizes
       if (selectedSize) {
         const sizeMatch = variant.selectedOptions.find(
-          (opt) =>
-            (opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size") &&
-            opt.value === selectedSize
+          (opt) => {
+            const name = opt.name.toLowerCase();
+            return (name === "tamanho" || name === "size" || name === "title") &&
+              opt.value === selectedSize;
+          }
         );
         if (!sizeMatch) return false;
       }
-      
+
       return true;
     });
-  }, [variants, selectedColor, selectedSize, availableSizes]);
+  }, [variants, selectedColor, selectedSize, availableSizes, hasColorOption]);
 
   // Calculate discount percentage
   const discountPercentage = useMemo(() => {
@@ -188,12 +205,13 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
     return null;
   }, [selectedVariant]);
 
-  // Get stock quantity
-  const stockQuantity = selectedVariant?.quantityAvailable ?? 0;
-  const isLowStock = stockQuantity > 0 && stockQuantity <= 5;
-  
+  // Check if variant is available for sale
+  const isAvailableForSale = selectedVariant?.availableForSale ?? false;
+  const stockQuantity = selectedVariant?.quantityAvailable ?? (isAvailableForSale ? 99 : 0);
+  const isLowStock = false; // quantityAvailable not available from Storefront API without inventory scope
+
   // IMPORTANTE: Verifica se pode adicionar ao carrinho
-  const canAddToCart = Boolean(selectedVariant && stockQuantity > 0);
+  const canAddToCart = Boolean(selectedVariant && isAvailableForSale);
 
   // Initialize selected color
   useEffect(() => {
@@ -206,37 +224,56 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
               (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
               opt.value === color.name
           );
-          return colorMatch && (variant.quantityAvailable ?? 0) > 0;
+          return colorMatch && variant.availableForSale;
         });
       });
       setSelectedColor(firstAvailable?.name || uniqueColors[0]?.name || null);
     }
   }, [uniqueColors, variants, selectedColor]);
 
-  // Initialize selected size - só roda quando temos cor selecionada
+  // Initialize selected size - runs when sizes are available
   useEffect(() => {
-    if (availableSizes.length > 0 && !selectedSize && selectedColor) {
-      // Encontra o primeiro tamanho disponível para a cor selecionada
-      const firstAvailableSize = availableSizes.find((size) => {
-        return variants.some((variant) => {
-          if (!variant.selectedOptions) return false;
-          
-          const colorMatch = variant.selectedOptions.find(
-            (opt) =>
-              (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
-              opt.value === selectedColor
-          );
-          const sizeMatch = variant.selectedOptions.find(
-            (opt) =>
-              (opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size") &&
-              opt.value === size
-          );
-          return colorMatch && sizeMatch && (variant.quantityAvailable ?? 0) > 0;
+    if (availableSizes.length > 0 && !selectedSize) {
+      // If product has colors, find first available size for selected color
+      if (hasColorOption && selectedColor) {
+        const firstAvailableSize = availableSizes.find((size) => {
+          return variants.some((variant) => {
+            if (!variant.selectedOptions) return false;
+            const colorMatch = variant.selectedOptions.find(
+              (opt) =>
+                (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
+                opt.value === selectedColor
+            );
+            const sizeMatch = variant.selectedOptions.find(
+              (opt) => {
+                const name = opt.name.toLowerCase();
+                return (name === "tamanho" || name === "size" || name === "title") &&
+                  opt.value === size;
+              }
+            );
+            return colorMatch && sizeMatch && variant.availableForSale;
+          });
         });
-      });
-      setSelectedSize(firstAvailableSize || availableSizes[0]);
+        setSelectedSize(firstAvailableSize || availableSizes[0]);
+      } else if (!hasColorOption) {
+        // No color option - find first available size
+        const firstAvailableSize = availableSizes.find((size) => {
+          return variants.some((variant) => {
+            if (!variant.selectedOptions) return false;
+            const sizeMatch = variant.selectedOptions.find(
+              (opt) => {
+                const name = opt.name.toLowerCase();
+                return (name === "tamanho" || name === "size" || name === "title") &&
+                  opt.value === size;
+              }
+            );
+            return sizeMatch && variant.availableForSale;
+          });
+        });
+        setSelectedSize(firstAvailableSize || availableSizes[0]);
+      }
     }
-  }, [availableSizes, variants, selectedColor, selectedSize]);
+  }, [availableSizes, variants, selectedColor, selectedSize, hasColorOption]);
 
   const handleQuantityChange = useCallback((delta: number) => {
     setQuantity((prev) => Math.max(1, Math.min(prev + delta, stockQuantity || 99)));
@@ -300,26 +337,33 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
           (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
           opt.value === colorName
       );
-      return colorMatch && (variant.quantityAvailable ?? 0) > 0;
+      return colorMatch && variant.availableForSale;
     });
   };
 
-  // Check if size is available for selected color
+  // Check if size is available (considering selected color if applicable)
   const isSizeAvailable = (size: string) => {
-    if (!selectedColor) return true;
     return variants.some((variant) => {
       if (!variant.selectedOptions) return false;
-      const colorMatch = variant.selectedOptions.find(
-        (opt) =>
-          (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
-          opt.value === selectedColor
-      );
+
+      // If product has colors, check color match
+      if (hasColorOption && selectedColor) {
+        const colorMatch = variant.selectedOptions.find(
+          (opt) =>
+            (opt.name.toLowerCase() === "cor" || opt.name.toLowerCase() === "color") &&
+            opt.value === selectedColor
+        );
+        if (!colorMatch) return false;
+      }
+
       const sizeMatch = variant.selectedOptions.find(
-        (opt) =>
-          (opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size") &&
-          opt.value === size
+        (opt) => {
+          const name = opt.name.toLowerCase();
+          return (name === "tamanho" || name === "size" || name === "title") &&
+            opt.value === size;
+        }
       );
-      return colorMatch && sizeMatch && (variant.quantityAvailable ?? 0) > 0;
+      return sizeMatch && variant.availableForSale;
     });
   };
 
@@ -456,11 +500,13 @@ const NewProductDetails: React.FC<NewProductDetailsProps> = ({
                                 opt.value === color.name
                             );
                             const sizeMatch = variant.selectedOptions.find(
-                              (opt) =>
-                                (opt.name.toLowerCase() === "tamanho" || opt.name.toLowerCase() === "size") &&
-                                opt.value === size
+                              (opt) => {
+                                const name = opt.name.toLowerCase();
+                                return (name === "tamanho" || name === "size" || name === "title") &&
+                                  opt.value === size;
+                              }
                             );
-                            return colorMatch && sizeMatch && (variant.quantityAvailable ?? 0) > 0;
+                            return colorMatch && sizeMatch && variant.availableForSale;
                           });
                         });
                         setSelectedSize(firstAvailableSize || availableSizes[0]);

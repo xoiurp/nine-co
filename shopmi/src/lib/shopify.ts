@@ -130,74 +130,7 @@ if (!SHOPIFY_STOREFRONT_TOKEN_CLIENT) {
 }
 
 // URL da API GraphQL da Shopify
-// Como estamos em modo de demonstração, usaremos dados mockados quando a API não estiver disponível
-
-// Função para criar dados mockados
-const createMockData = () => {
-  // Produtos mockados
-  const mockProducts = Array(10).fill(null).map((_, index) => ({
-    id: `gid://shopify/Product/${index + 1}`,
-    title: `Produto ${index + 1}`,
-    handle: `produto-${index + 1}`,
-    description: `Produto de alta qualidade com excelentes recursos e desempenho.`,
-    priceRange: {
-      minVariantPrice: {
-        amount: `${999 + index * 100}`,
-        currencyCode: 'BRL',
-      },
-    },
-    images: {
-      edges: [
-        {
-          node: {
-            originalSrc: 'https://placehold.co/600x400?text=Produto',
-            transformedSrc: 'https://placehold.co/600x400?text=Produto', // Mock
-            altText: `Produto ${index + 1}`,
-          },
-        },
-      ],
-    },
-  }));
-
-  // Coleções mockadas
-  const mockCollections = [
-    {
-      id: 'gid://shopify/Collection/1',
-      title: 'Smartphones',
-      handle: 'smartphones',
-      description: 'Nossa coleção de produtos',
-      image: {
-        originalSrc: 'https://placehold.co/600x400?text=Smartphones',
-        transformedSrc: 'https://placehold.co/600x400?text=Smartphones', // Mock
-        altText: 'Smartphones',
-      },
-    },
-    {
-      id: 'gid://shopify/Collection/2',
-      title: 'Acessórios',
-      handle: 'acessorios',
-      description: 'Acessórios selecionados',
-      image: {
-        originalSrc: 'https://placehold.co/600x400?text=Acessorios',
-        transformedSrc: 'https://placehold.co/600x400?text=Acessorios', // Mock
-        altText: 'Acessórios',
-      },
-    },
-    {
-      id: 'gid://shopify/Collection/3',
-      title: 'Casa Inteligente',
-      handle: 'casa-inteligente',
-      description: 'Produtos para sua casa inteligente',
-      image: {
-        originalSrc: 'https://placehold.co/600x400?text=Casa+Inteligente',
-        transformedSrc: 'https://placehold.co/600x400?text=Casa+Inteligente', // Mock
-        altText: 'Casa Inteligente',
-      },
-    },
-  ];
-
-  return { mockProducts, mockCollections };
-};
+// Nota: Mock data removido. Produtos agora publicados no canal correto da Storefront API.
 
 // Criando o link HTTP para a API Storefront GraphQL
 const storefrontLink = createHttpLink({
@@ -396,7 +329,6 @@ export async function getProducts(
                     currencyCode
                   }
                   availableForSale
-                  quantityAvailable # Quantidade em estoque
                   selectedOptions {
                     name
                     value
@@ -452,44 +384,14 @@ export async function getProducts(
         pageInfo: { hasNextPage: false, hasPreviousPage: false }
       };
     }
-  } catch (error)
- {
-    const { mockProducts } = createMockData();
-    // Simulação de paginação para mock data
-    let hasNext = false;
-    let hasPrev = false;
-    let startIdx = 0;
-
-    if (after) { // Simula 'after'
-      const afterIdx = mockProducts.findIndex(p => p.id === after); // Supondo que 'after' é um ID para mock
-      if (afterIdx !== -1) startIdx = afterIdx + 1;
-      hasPrev = true;
-    } else if (before) { // Simula 'before'
-      const beforeIdx = mockProducts.findIndex(p => p.id === before);
-      if (beforeIdx !== -1) {
-        startIdx = Math.max(0, beforeIdx - (last || first));
-      }
-      hasNext = true;
-    }
-    
-    const itemsToTake = last || first;
-    const paginatedMockProducts = mockProducts.slice(startIdx, startIdx + itemsToTake);
-    
-    if (!before) hasNext = (startIdx + itemsToTake) < mockProducts.length;
-    if (!after && startIdx > 0) hasPrev = true;
-
-
+  } catch (error) {
+    console.error('[Shopify] Erro ao buscar produtos:', error);
     return {
-      edges: paginatedMockProducts.map(node => ({ node })),
-      pageInfo: {
-        hasNextPage: hasNext,
-        endCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[paginatedMockProducts.length - 1].id : null, // Usando ID como cursor mock
-        hasPreviousPage: hasPrev,
-        startCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[0].id : null, // Usando ID como cursor mock
-      },
+      edges: [],
+      pageInfo: { hasNextPage: false, hasPreviousPage: false }
     };
   }
-} // <<<<<< CHAVE DE FECHAMENTO ADICIONADA/CORRIGIDA para a função getProducts
+}
 
 export async function getProductByHandle(
   handle: string,
@@ -542,7 +444,6 @@ export async function getProductByHandle(
                 currencyCode
               }
               availableForSale
-              quantityAvailable # Pede a quantidade disponível
               selectedOptions {
                 name
                 value
@@ -616,7 +517,8 @@ export async function getProductByHandle(
           {namespace: "custom", key: "sw_tipo_tela"},
           # Tabela de medidas
           {namespace: "custom", key: "tbl_tam"},
-          {namespace: "custom", key: "tbl-tam"}
+          {namespace: "custom", key: "tbl-tam"},
+          {namespace: "custom", key: "tab_med"}
         ]) {
           key
           value
@@ -634,15 +536,15 @@ export async function getProductByHandle(
     );
 
     if ('errors' in response) {
-      const { mockProducts } = createMockData();
-      return mockProducts.find((p) => p.handle === handle) || null;
+      console.error('[Shopify] Erro ao buscar produto por handle:', handle, response.errors);
+      return null;
     }
-    
+
     return response.data?.productByHandle || null;
 
   } catch (error) {
-    const { mockProducts } = createMockData();
-    return mockProducts.find((p) => p.handle === handle) || null;
+    console.error('[Shopify] Erro ao buscar produto por handle:', handle, error);
+    return null;
   }
 }
 
@@ -683,18 +585,18 @@ export async function getCollections(
     );
 
     if ('errors' in response) {
-      const { mockCollections } = createMockData(); // Fallback
-      return mockCollections;
+      console.error('[Shopify] Erro ao buscar coleções:', response.errors);
+      return [];
     }
-    
+
     const allCollections = response.data?.collections?.edges.map((edge) => edge.node) || [];
     // Only return collections that have at least one product
     return allCollections.filter(
       (col) => col.products && col.products.edges && col.products.edges.length > 0
     );
   } catch (error) {
-    const { mockCollections } = createMockData();
-    return mockCollections;
+    console.error('[Shopify] Erro ao buscar coleções:', error);
+    return [];
   }
 }
 
@@ -827,7 +729,6 @@ export async function getProductsByCollection(
                     currencyCode
                   }
                   availableForSale
-                  quantityAvailable # Quantidade em estoque
                   # Adiciona busca pelo metafield da cor na variante
                   metafield(namespace: "custom", key: "cor") {
                       value
@@ -864,70 +765,17 @@ export async function getProductsByCollection(
     );
 
     if ('errors' in response) {
-      // Fallback para mock data em caso de erro
-      const { mockProducts, mockCollections } = createMockData();
-      const collectionMock = mockCollections.find((c) => c.handle === collectionHandle);
-      if (collectionMock) {
-        // Simulação de paginação para mock data (simplificada para o fallback)
-        const paginatedMockProducts = mockProducts.slice(0, first);
-        return {
-          ...collectionMock,
-          products: {
-            edges: paginatedMockProducts.map(node => ({ node })),
-            pageInfo: {
-              hasNextPage: mockProducts.length > first,
-              endCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[paginatedMockProducts.length - 1].id : null,
-              hasPreviousPage: false,
-              startCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[0].id : null,
-            },
-          },
-        };
-      }
+      console.error('[Shopify] Erro ao buscar produtos por coleção:', collectionHandle, response.errors);
       return null;
     }
-    
+
     if (response.data && response.data.collectionByHandle) {
       return response.data.collectionByHandle;
     } else {
       return null;
     }
   } catch (error) {
-    const { mockProducts, mockCollections } = createMockData();
-    const collectionMock = mockCollections.find((c) => c.handle === collectionHandle);
-    if (collectionMock) {
-      // Simulação de paginação para mock data
-      let hasNext = false;
-      let hasPrev = false;
-      let startIdx = 0;
-      const itemsToTake = last || first;
-
-      if (after) {
-        const afterIdx = mockProducts.findIndex(p => p.id === after);
-        if (afterIdx !== -1) startIdx = afterIdx + 1;
-        hasPrev = true;
-      } else if (before) {
-        const beforeIdx = mockProducts.findIndex(p => p.id === before);
-        if (beforeIdx !== -1) startIdx = Math.max(0, beforeIdx - itemsToTake);
-        hasNext = true;
-      }
-      
-      const paginatedMockProducts = mockProducts.slice(startIdx, startIdx + itemsToTake);
-      if (!before) hasNext = (startIdx + itemsToTake) < mockProducts.length;
-      if (!after && startIdx > 0) hasPrev = true;
-
-      return {
-        ...collectionMock,
-        products: {
-          edges: paginatedMockProducts.map(node => ({ node })),
-          pageInfo: {
-            hasNextPage: hasNext,
-            endCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[paginatedMockProducts.length - 1].id : null,
-            hasPreviousPage: hasPrev,
-            startCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[0].id : null,
-          },
-        },
-      };
-    }
+    console.error('[Shopify] Erro ao buscar produtos por coleção:', collectionHandle, error);
     return null;
   }
 }
@@ -1082,7 +930,6 @@ export async function searchProducts(
                     currencyCode
                   }
                   availableForSale
-                  quantityAvailable
                   selectedOptions {
                     name
                     value
@@ -1146,41 +993,10 @@ export async function searchProducts(
       };
     }
   } catch (error) {
-    const { mockProducts } = createMockData();
-    // Simulação de paginação para mock data
-    const filtered = mockProducts.filter(
-      (product) =>
-        product.title.toLowerCase().includes(queryText.toLowerCase()) ||
-        (product.description && product.description.toLowerCase().includes(queryText.toLowerCase()))
-    );
-    
-    let hasNext = false;
-    let hasPrev = false;
-    let startIdx = 0;
-    const itemsToTake = last || first;
-
-    if (after) {
-      const afterIdx = filtered.findIndex(p => p.id === after);
-      if (afterIdx !== -1) startIdx = afterIdx + 1;
-      hasPrev = true;
-    } else if (before) {
-      const beforeIdx = filtered.findIndex(p => p.id === before);
-      if (beforeIdx !== -1) startIdx = Math.max(0, beforeIdx - itemsToTake);
-      hasNext = true;
-    }
-    
-    const paginatedMockProducts = filtered.slice(startIdx, startIdx + itemsToTake);
-    if (!before) hasNext = (startIdx + itemsToTake) < filtered.length;
-    if (!after && startIdx > 0) hasPrev = true;
-    
+    console.error('[Shopify] Erro na busca de produtos:', queryText, error);
     return {
-      edges: paginatedMockProducts.map(node => ({ node })),
-      pageInfo: {
-        hasNextPage: hasNext,
-        endCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[paginatedMockProducts.length - 1].id : null,
-        hasPreviousPage: hasPrev,
-        startCursor: paginatedMockProducts.length > 0 ? paginatedMockProducts[0].id : null,
-      },
+      edges: [],
+      pageInfo: { hasNextPage: false, hasPreviousPage: false }
     };
   }
 }
@@ -1306,7 +1122,6 @@ export async function getRelatedProducts(
                 currencyCode
               }
               availableForSale
-              quantityAvailable
               selectedOptions {
                 name
                 value

@@ -10,7 +10,7 @@ import {
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: "Política de Privacidade - PICO",
+  title: "Política de Privacidade - Ninē & CO",
   description:
     "Saiba como coletamos, usamos e protegemos suas informações pessoais.",
 };
@@ -92,7 +92,7 @@ const privacyCategories = [
       {
         question: "Como posso exercer meus direitos?",
         answer:
-          "Para exercer qualquer um dos seus direitos, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail privacidade@pico.com.br ou através do formulário disponível na seção \"Contato\" do nosso site. Responderemos à sua solicitação em até 15 dias úteis, conforme previsto na legislação.",
+          "Para exercer qualquer um dos seus direitos, entre em contato com nosso Encarregado de Proteção de Dados pelo e-mail privacidade@nineco.com.br ou através do formulário disponível na seção \"Contato\" do nosso site. Responderemos à sua solicitação em até 15 dias úteis, conforme previsto na legislação.",
       },
       {
         question: "Posso solicitar a exclusão da minha conta e dados?",

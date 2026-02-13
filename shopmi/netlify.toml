@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && npm run build"
+  command = "npm ci && npm install --no-save lightningcss-linux-x64-gnu@1.29.2 && npm run build"
   publish = ".next"
   # Configuração do scanner de segredos
   secrets_scan_enabled = true
@@ -30,7 +30,7 @@
   # Configurações específicas do Netlify
   NETLIFY = "true"
   # Configurar senhas para seed (serão geradas automaticamente se não definidas)
-  ADMIN_EMAIL = "admin@mibrasil.com"
+  ADMIN_EMAIL = "admin@nineco.com.br"
   CLIENT_EMAIL = "cliente@teste.com"
 
 [build.processing]

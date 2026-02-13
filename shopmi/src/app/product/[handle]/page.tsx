@@ -161,12 +161,12 @@ export default async function ProductPage({
     hex,
   }));
   
-  // Extract size chart data from metafields
+  // Extract size chart data from metafields (supports tbl_tam, tbl-tam, and tab_med)
   const sizeChartMetafield = product.metafields?.find(
     (mf) =>
       mf &&
       mf.namespace === "custom" &&
-      (mf.key === "tbl_tam" || mf.key === "tbl-tam") &&
+      (mf.key === "tbl_tam" || mf.key === "tbl-tam" || mf.key === "tab_med") &&
       mf.value &&
       mf.value.trim() !== ""
   );
@@ -307,6 +307,7 @@ export default async function ProductPage({
                         "mobile html url",
                         "tbl tam",
                         "tbl-tam",
+                        "tab med",
                       ].includes(
                         metafield.key
                           .toLowerCase()

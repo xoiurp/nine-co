@@ -11,11 +11,6 @@ export default function ConditionalHeader() {
     return null;
   }
 
-  // Páginas com fundo escuro/hero (header transparente padrão)
-  if (pathname === "/" || pathname === "/shop" || pathname.startsWith("/shop/")) {
-    return <NewHeader />;
-  }
-
-  // Todas as demais páginas usam NewHeader com cores invertidas (fundo claro)
-  return <NewHeader invertColors />;
+  // Header sempre branco com cores originais do logotipo
+  return <NewHeader />;
 }

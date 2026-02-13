@@ -16,7 +16,7 @@ let adminClient: ApolloClient<any> | null = null;
 if (SHOPIFY_ADMIN_API_TOKEN) {
   // Criando o link HTTP para a API Admin GraphQL
   const adminLink = createHttpLink({
-    uri: `https://${SHOPIFY_STORE_DOMAIN}/admin/api/2024-10/graphql.json`,
+    uri: `https://${SHOPIFY_STORE_DOMAIN}/admin/api/2025-01/graphql.json`,
     headers: {
       // Garantido que SHOPIFY_ADMIN_API_TOKEN é string aqui
       'X-Shopify-Access-Token': SHOPIFY_ADMIN_API_TOKEN,
@@ -142,7 +142,7 @@ export const adminOperations = {
       title: productData.title,
       descriptionHtml: productData.descriptionHtml || "",
       productType: productData.productType || "",
-      vendor: productData.vendor || "PICO",
+      vendor: productData.vendor || "Ninē & CO",
       tags: productData.tags || [],
       images: images,
       variants: variants

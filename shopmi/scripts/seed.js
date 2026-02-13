@@ -8,7 +8,7 @@ async function main() {
 
   try {
     // Criar usuário admin padrão
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@mibrasil.com';
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@nineco.com.br';
     const adminPassword = process.env.ADMIN_PASSWORD || generateRandomPassword();
 
     // Verificar se o admin já existe

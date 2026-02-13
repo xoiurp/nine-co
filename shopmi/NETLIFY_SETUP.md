@@ -75,7 +75,7 @@ O sistema inclui:
 
 ### 3.3 Credenciais Automáticas
 Após o deploy, o sistema gerará automaticamente:
-- **Admin**: `admin@mibrasil.com` / `senha gerada automaticamente`
+- **Admin**: `admin@nineco.com.br` / `senha gerada automaticamente`
 - **Cliente**: `cliente@teste.com` / `senha gerada automaticamente`
 
 As senhas serão exibidas nos logs do primeiro deploy. Para definir senhas específicas, configure as variáveis de ambiente:

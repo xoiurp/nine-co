@@ -5,12 +5,12 @@
 Baseado na screenshot fornecida, você tem:
 
 ### 1. Domínio Principal (Vinculado)
-- **Domínio**: `shop.mibrasil.com`
+- **Domínio**: `shop.nineco.com`
 - **Status**: ATIVO ✅
 - **Certificado SSL**: ATIVO ✅
 
 ### 2. Link de Compra do Checkout
-- **Meu domínio**: `https://seguro.mibrasil.com/`
+- **Meu domínio**: `https://seguro.nineco.com/`
 - **Status**: DOMÍNIO EM USO ✅
 
 ## A Configuração Correta
@@ -18,7 +18,7 @@ Baseado na screenshot fornecida, você tem:
 A API Dooki espera o domínio **sem protocolo e sem barra final**. Baseado no seu painel, o domínio correto é:
 
 ```
-seguro.mibrasil.com
+seguro.nineco.com
 ```
 
 ## Atualize o Arquivo .env
@@ -27,19 +27,19 @@ Abra o arquivo `.env` e configure:
 
 ```bash
 # Yampi Configuration - USAR O DOMÍNIO DO CHECKOUT
-YAMPI_SHOP_DOMAIN=seguro.mibrasil.com
-NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=seguro.mibrasil.com
+YAMPI_SHOP_DOMAIN=seguro.nineco.com
+NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=seguro.nineco.com
 ```
 
-## Por que `seguro.mibrasil.com` e não `shop.mibrasil.com`?
+## Por que `seguro.nineco.com` e não `shop.nineco.com`?
 
 Na Yampi existem dois tipos de domínio:
 
-1. **Domínio Principal** (`shop.mibrasil.com`):
+1. **Domínio Principal** (`shop.nineco.com`):
    - É o domínio da sua loja/catálogo
    - Usado para páginas de produtos, vitrine, etc.
 
-2. **Link de Compra do Checkout** (`seguro.mibrasil.com`):
+2. **Link de Compra do Checkout** (`seguro.nineco.com`):
    - É o domínio do **processo de checkout**
    - É onde o cliente finaliza a compra
    - É este que a API Dooki precisa reconhecer
@@ -48,8 +48,8 @@ Na Yampi existem dois tipos de domínio:
 
 1. **Atualize o `.env`**:
    ```bash
-   YAMPI_SHOP_DOMAIN=seguro.mibrasil.com
-   NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=seguro.mibrasil.com
+   YAMPI_SHOP_DOMAIN=seguro.nineco.com
+   NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=seguro.nineco.com
    ```
 
 2. **Reinicie o servidor**:
@@ -66,14 +66,14 @@ Na Yampi existem dois tipos de domínio:
 4. **Resultado esperado**:
    ```
    [Yampi Checkout] Sending payload to Dooki: {
-     "shop": "seguro.mibrasil.com",
+     "shop": "seguro.nineco.com",
      ...
    }
    [Yampi Checkout] Dooki response: {
-     "checkout_direct_url": "https://seguro.mibrasil.com/checkout/...",
+     "checkout_direct_url": "https://seguro.nineco.com/checkout/...",
      ...
    }
-   [CartDrawer] Redirecionando para: https://seguro.mibrasil.com/checkout/...
+   [CartDrawer] Redirecionando para: https://seguro.nineco.com/checkout/...
    ```
 
 ## Se Não Funcionar
@@ -81,8 +81,8 @@ Na Yampi existem dois tipos de domínio:
 Tente também com o domínio principal (sem o `seguro.`):
 
 ```bash
-YAMPI_SHOP_DOMAIN=mibrasil.com
-NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=mibrasil.com
+YAMPI_SHOP_DOMAIN=nineco.com
+NEXT_PUBLIC_YAMPI_SHOP_DOMAIN=nineco.com
 ```
 
 ## Configuração na Netlify
@@ -91,11 +91,11 @@ Quando funcionar localmente, não esqueça de configurar na Netlify:
 
 1. Acesse: Site settings → Environment variables
 2. Adicione/atualize:
-   - `YAMPI_SHOP_DOMAIN` = `seguro.mibrasil.com`
-   - `NEXT_PUBLIC_YAMPI_SHOP_DOMAIN` = `seguro.mibrasil.com`
+   - `YAMPI_SHOP_DOMAIN` = `seguro.nineco.com`
+   - `NEXT_PUBLIC_YAMPI_SHOP_DOMAIN` = `seguro.nineco.com`
 3. Faça novo deploy
 
 ---
 
 **Atualização aplicada em**: `src/lib/yampi.ts`
-- Domínio padrão alterado para: `seguro.mibrasil.com`
+- Domínio padrão alterado para: `seguro.nineco.com`

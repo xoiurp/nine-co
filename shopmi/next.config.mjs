@@ -10,6 +10,7 @@ const nextConfig = { // Removida a anotação de tipo ': NextConfig'
       'i01.appmifile.com',
       'placehold.co',
       'cdn.shopify.com',
+      '0gbjsk-bq.myshopify.com',
       'uxh1te-1d.myshopify.com',
       'shopmi-edge-dev.gustavobressanin6.workers.dev'
     ],

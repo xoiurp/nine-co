@@ -290,7 +290,7 @@ export default function AdminDashboard() {
         {/* Logo */}
         <div className="p-6 border-b">
           <div className="flex items-center">
-            <img src="/logo-pico.svg" alt="PICO" className="h-8 w-8" />
+            <img src="/logo-pico.svg" alt="Ninē & CO" className="h-8 w-8" />
             {sidebarOpen && <span className="ml-3 text-xl font-bold text-gray-800">Admin</span>}
           </div>
         </div>

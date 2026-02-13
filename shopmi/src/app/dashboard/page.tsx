@@ -61,7 +61,7 @@ export default function DashboardPage() {
               <Link href="/" className="flex items-center">
                 <img
                   src="/logo-pico.svg"
-                  alt="PICO"
+                  alt="Ninē & CO"
                   className="h-8 w-auto mr-4"
                 />
               </Link>

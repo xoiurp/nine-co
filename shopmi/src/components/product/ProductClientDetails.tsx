@@ -746,7 +746,7 @@ export default function ProductClientDetails({
                         metafield.value.trim() !== '' &&
                         (metafield.namespace === 'custom' || metafield.namespace === 'specs') &&
                         // Oculta os metafields específicos visualmente, incluindo os de controle de HTML/fonte
-                        !['use custom rem base', 'rem base font size', 'html mobile', 'mobile font size', 'mobile html url', 'tbl tam', 'tbl-tam'].includes(
+                        !['use custom rem base', 'rem base font size', 'html mobile', 'mobile font size', 'mobile html url', 'tbl tam', 'tbl-tam', 'tab med'].includes(
                           metafield.key.toLowerCase().replace(/[\._-]/g, ' ').replace(/\s+/g, ' ').trim()
                         )
                       ) // Adiciona verificação para 'metafield' ser válido, inclui namespace 'specs' e oculta específicos

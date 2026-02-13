@@ -22,12 +22,12 @@ MELHOR_ENVIO_ENVIRONMENT=sandbox
 ### 2. URLs Configuradas no Aplicativo
 Baseado na imagem fornecida, o aplicativo deve ser configurado com:
 
-- **Nome da plataforma**: mibrasil5gb
-- **Site da plataforma**: https://mibrasil.com
-- **E-mail de contato**: contato@mibrasil.com
-- **E-mail de suporte técnico**: contato@mibrasil.com
-- **URL do seu ambiente para testes**: https://mibrasil.com/admin/orders
-- **URL de redirecionamento após autorização**: https://mibrasil.com/admin/orders/thankyou
+- **Nome da plataforma**: nineco
+- **Site da plataforma**: https://nineco.com.br
+- **E-mail de contato**: contato@nineco.com.br
+- **E-mail de suporte técnico**: contato@nineco.com.br
+- **URL do seu ambiente para testes**: https://nineco.com.br/admin/orders
+- **URL de redirecionamento após autorização**: https://nineco.com.br/admin/orders/thankyou
 
 ## Processo de Configuração
 

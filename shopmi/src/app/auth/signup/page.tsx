@@ -102,7 +102,7 @@ export default function SignUpPage() {
           <Link href="/" className="inline-block">
             <img
               src="/logo-pico.svg"
-              alt="PICO"
+              alt="Ninē & CO"
               className="h-12 w-auto mx-auto"
             />
           </Link>

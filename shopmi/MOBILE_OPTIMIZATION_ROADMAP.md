@@ -1,8 +1,8 @@
-# 📱 Roadmap de Otimização Mobile - Mi Brasil
+# 📱 Roadmap de Otimização Mobile - Ninê & Co
 
 ## 🎯 Objetivo
 
-Este documento apresenta um plano de ação detalhado para otimizar a experiência mobile do e-commerce Mi Brasil, focando em **performance**, **usabilidade** e **conversão**.
+Este documento apresenta um plano de ação detalhado para otimizar a experiência mobile do e-commerce Ninê & Co, focando em **performance**, **usabilidade** e **conversão**.
 
 ---
 
@@ -414,9 +414,9 @@ jobs:
         uses: treosh/lighthouse-ci-action@v10
         with:
           urls: |
-            https://mibrasil.com/
-            https://mibrasil.com/shop
-            https://mibrasil.com/checkout
+            https://nineco.com.br/
+            https://nineco.com.br/shop
+            https://nineco.com.br/checkout
           budgetPath: ./lighthouse-budget.json
 ```
 

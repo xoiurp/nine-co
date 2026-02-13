@@ -10,9 +10,9 @@ import {
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: "Contato - PICO",
+  title: "Contato - Ninē & CO",
   description:
-    "Entre em contato com a equipe PICO. Estamos prontos para atender você.",
+    "Entre em contato com a equipe Ninē & CO. Estamos prontos para atender você.",
 };
 
 const contatoCategories = [
@@ -22,7 +22,7 @@ const contatoCategories = [
       {
         question: "Quais são os canais de atendimento?",
         answer:
-          "Você pode entrar em contato conosco por e-mail em contato@pico.com.br, pelo chat ao vivo disponível no canto inferior direito do site durante o horário comercial, por telefone no (11) 4002-8922, ou através das nossas redes sociais no Instagram (@pico.oficial) e Facebook. Escolha o canal que for mais conveniente para você.",
+          "Você pode entrar em contato conosco por e-mail em contato@nineco.com.br, pelo chat ao vivo disponível no canto inferior direito do site durante o horário comercial, por telefone no (11) 4002-8922, ou através das nossas redes sociais no Instagram (@nineecia) e Facebook. Escolha o canal que for mais conveniente para você.",
       },
       {
         question: "Qual o horário de atendimento?",
@@ -80,24 +80,24 @@ const contatoCategories = [
     title: "Informações da empresa",
     items: [
       {
-        question: "Onde fica a sede da PICO?",
+        question: "Onde fica a sede da Ninē & CO?",
         answer:
           "Nossa sede está localizada na Rua Augusta, 1234, Consolação, São Paulo - SP, CEP 01304-001. Nosso showroom funciona de segunda a sábado, das 10h às 19h, e você é muito bem-vindo para conhecer nossos produtos pessoalmente. Não é necessário agendamento.",
       },
       {
-        question: "A PICO possui lojas físicas?",
+        question: "A Ninē & CO possui lojas físicas?",
         answer:
           "Além da nossa loja principal em São Paulo, estamos presentes em pontos de venda selecionados em diversas capitais brasileiras. Para conhecer o ponto de venda mais próximo de você, entre em contato com nosso atendimento ou consulte a seção \"Nossas Lojas\" no rodapé do site.",
       },
       {
-        question: "Como posso trabalhar na PICO?",
+        question: "Como posso trabalhar na Ninē & CO?",
         answer:
-          "Estamos sempre em busca de talentos que compartilhem nossa paixão por moda e inovação. Envie seu currículo para vagas@pico.com.br com o cargo de interesse no assunto do e-mail. Acompanhe também nossas vagas abertas no LinkedIn. Valorizamos diversidade, criatividade e comprometimento em nossa equipe.",
+          "Estamos sempre em busca de talentos que compartilhem nossa paixão por moda e inovação. Envie seu currículo para vagas@nineco.com.br com o cargo de interesse no assunto do e-mail. Acompanhe também nossas vagas abertas no LinkedIn. Valorizamos diversidade, criatividade e comprometimento em nossa equipe.",
       },
       {
-        question: "A PICO aceita parcerias e colaborações?",
+        question: "A Ninē & CO aceita parcerias e colaborações?",
         answer:
-          "Sim, estamos abertos a parcerias com criadores de conteúdo, marcas complementares e iniciativas que estejam alinhadas aos nossos valores. Para propostas comerciais, envie um e-mail para parcerias@pico.com.br com detalhes da proposta. Nossa equipe analisará e retornará em até 5 dias úteis.",
+          "Sim, estamos abertos a parcerias com criadores de conteúdo, marcas complementares e iniciativas que estejam alinhadas aos nossos valores. Para propostas comerciais, envie um e-mail para parcerias@nineco.com.br com detalhes da proposta. Nossa equipe analisará e retornará em até 5 dias úteis.",
       },
     ],
   },
@@ -154,7 +154,7 @@ export default function ContatoPage() {
             <h3 className="text-xs uppercase tracking-[0.15em] font-medium text-[#1a1a1a] mb-2">
               E-mail
             </h3>
-            <p className="text-sm text-[#666]">contato@pico.com.br</p>
+            <p className="text-sm text-[#666]">contato@nineco.com.br</p>
           </div>
 
           {/* Phone */}
@@ -225,7 +225,7 @@ export default function ContatoPage() {
             rápido possível.
           </p>
           <a
-            href="mailto:contato@pico.com.br"
+            href="mailto:contato@nineco.com.br"
             className="inline-block bg-[#1a1a1a] text-white py-3.5 px-10 text-xs tracking-[0.15em] uppercase font-medium hover:bg-black transition-colors"
           >
             Enviar e-mail

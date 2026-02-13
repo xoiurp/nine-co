@@ -6,77 +6,24 @@ import Link from "next/link";
 
 const HeroSection = () => {
   return (
-    <section
-      className="relative w-full h-screen min-h-[600px] overflow-hidden"
-      style={{
-        outline: 'none',
-        boxShadow: 'none',
-        border: 'none',
-        position: 'relative'
-      }}
-    >
-      {/* Background Image */}
-      <div
-        className="absolute inset-0"
-        style={{
-          outline: 'none',
-          boxShadow: 'none',
-          border: 'none'
-        }}
-      >
+    <section className="relative w-full px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-4 sm:pb-6 lg:pb-8">
+      {/* Banner Image - with padding and rounded corners */}
+      <div className="relative w-full overflow-hidden rounded-2xl sm:rounded-3xl">
         <Image
-          src="/hero-section.webp"
-          alt="Hero Background"
-          fill
+          src="/hero-section-banner.png"
+          alt="Ninē & CO - Moda Infantil para Brincar e Crescer"
+          width={1920}
+          height={720}
           priority
-          className="object-cover object-top"
+          className="w-full h-auto object-cover"
           sizes="100vw"
-          unoptimized
         />
-        {/* Overlay */}
-        <div
-          className="absolute inset-0 bg-black/10"
-          style={{ pointerEvents: 'none' }}
+        {/* Clickable overlay - entire banner links to shop */}
+        <Link
+          href="/shop"
+          className="absolute inset-0"
+          aria-label="Comprar agora"
         />
-      </div>
-
-      {/* Content */}
-      <div
-        className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-4"
-        style={{
-          outline: 'none',
-          boxShadow: 'none',
-          border: 'none'
-        }}
-      >
-        {/* Main Content - Bottom aligned */}
-        <div
-          className="mt-auto mb-24 sm:mb-32 md:mb-40"
-          style={{
-            outline: 'none',
-            boxShadow: 'none',
-            border: 'none'
-          }}
-        >
-          {/* Subtitle */}
-          <p className="text-[10px] sm:text-xs tracking-[0.4em] uppercase mb-4 sm:mb-6 opacity-90">
-            Peças exclusivas Verão 26
-          </p>
-
-          {/* Main Title */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight mb-8 sm:mb-10">
-            Bold by design
-          </h1>
-
-          {/* CTA Button */}
-          <Link
-            href="/shop"
-            className="inline-block px-8 sm:px-10 py-3 sm:py-4 border border-white/80 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-medium hover:bg-white hover:text-black transition-all duration-300"
-            style={{ outline: 'none', boxShadow: 'none' }}
-          >
-            Descubra mais
-          </Link>
-        </div>
       </div>
     </section>
   );

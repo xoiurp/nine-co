@@ -10,7 +10,7 @@ import {
 export const dynamic = "force-static";
 
 export const metadata = {
-  title: "FAQ - PICO",
+  title: "FAQ - Ninē & CO",
   description:
     "Perguntas frequentes sobre pedidos, envio, devoluções, pagamentos e mais.",
 };
@@ -108,7 +108,7 @@ const faqCategories = [
       {
         question: "Como entrar em contato com o suporte?",
         answer:
-          "Você pode entrar em contato conosco através do e-mail suporte@pico.com.br, pelo chat disponível no canto inferior direito do site (horário comercial), ou através das nossas redes sociais. Nosso tempo médio de resposta é de até 24 horas em dias úteis.",
+          "Você pode entrar em contato conosco através do e-mail suporte@nineco.com.br, pelo chat disponível no canto inferior direito do site (horário comercial), ou através das nossas redes sociais. Nosso tempo médio de resposta é de até 24 horas em dias úteis.",
       },
       {
         question: "Posso cancelar meu pedido?",

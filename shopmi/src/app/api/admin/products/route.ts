@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     const productInput = {
       title: productData.title,
       descriptionHtml: productData.descriptionHtml || '',
-      vendor: productData.vendor || 'PICO',
+      vendor: productData.vendor || 'Ninē & CO',
       productType: productData.productType || '',
       tags: productData.tags || [],
       images: productData.images || [],
